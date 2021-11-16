@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from .db_connect import get_db
 
 
 def create_app(test_config=None):
@@ -8,11 +9,21 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
     )
 
-    from . import update_data
-    update_data.update_data()
+    # from . import update_data
+    # update_data.update_data()
+
+    from . import search
+    app.register_blueprint(search.bp)
 
     @app.route('/')
     def index():
-        return render_template('index.html')
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute(
+            f'SELECT * FROM book'
+        )
+        books = cursor.fetchall()
+        return render_template('index.html', books=books)
 
     return app

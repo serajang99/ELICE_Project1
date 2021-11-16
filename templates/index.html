@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,66 +10,86 @@
 
     <!-- Bootstrap JS -->
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script
+      type="text/javascript"
+      src="/static/js/jquery-3.6.0.min.js"
+    ></script>
 
     <title>Elice Project</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <main>
-        <div class="container-fluid py-4">
-            <nav class="navbar navbar-light border-bottom mb-4">
-                <div class="container-fluid">
-                    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                        <img src="/static/img/book_logo.png" height="30" class="d-inline-block align-text-top" />
-                        <span class="ps-2 fs-4">Elice Library</span>
-                    </a>
-                    <form class="d-flex">
-                        {% if g.username %}
-                        <a href="#">
-                            <button type="button" class="btn btn-outline-primary mx-1">
-                                로그아웃
-                            </button>
-                        </a>
-                        {% else %}
-                        <a href="#">
-                            <button type="button" class="btn btn-outline-primary mx-1">
-                                로그인
-                            </button>
-                        </a>
-                        <a href="#">
-                            <button type="button" class="btn btn-outline-primary ms-1">
-                                회원가입
-                            </button>
-                        </a>
-                        {% endif %}
-                    </form>
-                </div>
-            </nav>
+      <div class="container-fluid py-4">
+        <nav class="navbar navbar-light border-bottom mb-4">
+          <div class="container-fluid">
+            <a
+              href="/"
+              class="d-flex align-items-center text-dark text-decoration-none"
+            >
+              <img
+                src="/static/img/book_logo.png"
+                height="30"
+                class="d-inline-block align-text-top"
+              />
+              <span class="ps-2 fs-4">Elice Library</span>
+            </a>
+            <form class="d-flex">
+              {% if g.username %}
+              <a href="#">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  로그아웃
+                </button>
+              </a>
+              {% else %}
+              <a href="#">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  로그인
+                </button>
+              </a>
+              <a href="#">
+                <button type="button" class="btn btn-outline-primary ms-1">
+                  회원가입
+                </button>
+              </a>
+              {% endif %}
+            </form>
+          </div>
+        </nav>
 
-            <div class="p-5 mb-5 bg-secondary rounded-3 text-center">
-                <div class="container-fluid py-5 text-white">
-                    <h1 class="display-6 fw-bold">엘리스 도서관</h1>
-                    <span class="lead col-md-7 fs-5">엘리스 도서관에 오신 것을 환영합니다!</span>
-                </div>
-            </div>
+        <div class="p-5 mb-5 bg-secondary rounded-3 text-center">
+          <div class="container-fluid py-5 text-white">
+            <h1 class="display-6 fw-bold">엘리스 도서관</h1>
+            <span class="lead col-md-7 fs-5"
+              >엘리스 도서관에 오신 것을 환영합니다!</span
+            >
+          </div>
+        </div>
 
-            <div class="table-responsive">
-                <div class="d-flex flex-row">
-                    <div class="container-fluid">
-                        <!-- 검색 -->
-                        <div class="d-flex flex-row">
-                            <select id="searchType" class="form-select me-3" style="max-width: 15%; height: 100%">
-                                <option value="title">제목</option>
-                                <option value="author">저자</option>
-                                <option value="publisher">출판사</option>
-                            </select>
-                            <input type="text" class="form-control mb-3" id="searchBox" placeholder="검색" />
-                        </div>
-                        
-                        <!-- 책 결과 -->
-                        <table class="table table-hover table-bordered">
-                            <!-- <thead class="table-light">
+        <div class="table-responsive">
+          <div class="d-flex flex-row">
+            <div class="container-fluid">
+              <!-- 검색 -->
+              <div class="d-flex flex-row">
+                <select
+                  id="searchType"
+                  class="form-select me-3"
+                  style="max-width: 15%; height: 100%"
+                >
+                  <option value="title">제목</option>
+                  <option value="author">저자</option>
+                  <option value="publisher">출판사</option>
+                </select>
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  id="searchBox"
+                  placeholder="검색"
+                />
+              </div>
+
+              <!-- 책 결과 -->
+              <!-- <thead class="table-light">
                                 <tr>
                                     <th scope="col">센터유형</th>
                                     <th scope="col">센터명</th>
@@ -79,149 +98,115 @@
                                     <th scope="col">전화번호</th>
                                 </tr>
                             </thead> -->
-                            <tbody id="resultBody">
-                                <div class="container-fluid text-center my-3" style="height:auto">
-                                    <div class="row my-2 mx-auto" style="height:200px">
-                                        <div class="col-2 mx-auto bg-info rounded-3">1</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">2</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">3</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">4</div>
-                                    </div>
-                                    <div class="row my-2 mx-auto" style="height:200px">
-                                        <div class="col-2 mx-auto bg-info rounded-3">5</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">6</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">7</div>
-                                        <div class="col-2 mx-auto bg-info rounded-3">8</div>
-                                    </div>
-                                </div>
-                            </tbody>
-                        </table>
-                        
-                        <!-- pagination -->
-                        <nav>
-                            <ul class="pagination justify-content-center" id="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" data-page="1" href="#" aria-label="Previous">
-                                        &laquo;
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" data-page="1" href="#">1</a>
-                                </li>
-                                <li class="page-item" id="last-page">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        &raquo;
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
 
-                    </div>
+              <div
+                class="container-fluid text-center my-3"
+                style="height: auto"
+              >
+                <div
+                  id="resultBody"
+                  class="row my-2 mx-auto"
+                  style="height: 300px"
+                >
+                  {%for book in books %}
+                  <div class="col-2 mx-auto bg-secondary rounded-3">
+                    {{book.title}}<br />
+                    {{book.author}}<br />
+                    {{book.star}}<br />
+                    {{book.stock}}<br />
+                  </div>
+                  {%endfor%}
                 </div>
-                <script>
-                    function searchBooks() {
-                        $.ajax({
-                            type: "GET",
-                            url:
-                                "/search/books?q=" +
-                                searchQuery +
-                                "&type=" +
-                                searchType.value +
-                                "&page=" +
-                                searchPage,
-                            dataType: "json",
-                            success: function (res) {
-                                // 마커 삭제
-                                clearMarkers();
-                                resultBody.innerHTML = "";
+              </div>
 
-                                res.result.forEach((center) => {
-                                    // 리스트 추가
-                                    resultBody.innerHTML +=
-                                        '<tr onclick="selectCenter(this);" data-lat="' +
-                                        center.lat +
-                                        '" data-lng="' +
-                                        center.lng +
-                                        '" style="cursor:pointer;"><th scope="row">' +
-                                        center.centerType +
-                                        "</th><td>" +
-                                        center.centerName +
-                                        "</td><td>" +
-                                        center.facilityName +
-                                        "</td><td>" +
-                                        center.full_address +
-                                        "</td><td>" +
-                                        center.phoneNumber +
-                                        "</td></tr>";
-
-                                    // 마커 추가
-                                    var marker = new kakao.maps.Marker({
-                                        title: center.facilityName,
-                                        position: new kakao.maps.LatLng(center.lat, center.lng),
-                                    });
-                                    markerList.push(marker);
-                                });
-
-                                // 기존 페이지 제거
-                                for (var i = 0; i < pagination.children.length; i++) {
-                                    if (i === 0) continue;
-                                    else if (pagination.children[i] === lastPage) break;
-                                    pagination.removeChild(pagination.children[i--]);
-                                }
-
-                                // 페이지 추가
-                                var template = document.createElement("template");
-                                for (var i = 1; i <= parseInt(res.totalPage); i++) {
-                                    template.innerHTML =
-                                        '<li class="page-item"><a class="page-link" data-page="' +
-                                        i +
-                                        '" href="#">' +
-                                        i +
-                                        "</a></li>";
-                                    pagination.insertBefore(
-                                        template.content.firstChild,
-                                        lastPage
-                                    );
-                                }
-
-                                lastPage.children[0].dataset.page = res.totalPage;
-
-                                // 페이지 이벤트 등록
-                                var pageList = document.getElementsByClassName("page-item");
-                                for (var i = 0; i < pageList.length; i++) {
-                                    pageList[i].addEventListener("click", selectPage, false);
-                                }
-
-                                // 마커 등록
-                                setMarker(map);
-                            },
-                            error: function (request, status, error) {
-                                res = JSON.parse(request.responseText);
-                                alert(res.message);
-                                // 마커 삭제
-                                clearMarkers();
-                            },
-                        });
-                    }
-
-                    function selectPage(e) {
-                        var sender = e.target;
-                        if (sender.dataset.page != null) {
-                            searchPage = parseInt(sender.dataset.page);
-                            searchCenter();
-                        }
-                    }
-
-                    function selectCenter(sender) {
-                        var lat = sender.dataset.lat;
-                        var lng = sender.dataset.lng;
-                        map.setCenter(new kakao.maps.LatLng(lat, lng));
-                        map.setLevel(3);
-                    }
-                </script>
+              <!-- pagination -->
+              <nav>
+                <ul class="pagination justify-content-center" id="pagination">
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      data-page="1"
+                      href="#"
+                      aria-label="Previous"
+                    >
+                      &laquo;
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" data-page="1" href="#">1</a>
+                  </li>
+                  <li class="page-item" id="last-page">
+                    <a class="page-link" href="#" aria-label="Next">
+                      &raquo;
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
-        </div>
-    </main>
-</body>
+          </div>
+          <script>
+            var searchBox = document.getElementById("searchBox");
+            var resultBody = document.getElementById("resultBody");
+            var searchType = document.getElementById("searchType");
+            var searchQuery = null;
 
+            searchBox.onkeydown = function (e) {
+              if (e.keyCode != 13) return;
+              searchQuery = searchBox.value;
+              searchBook();
+            };
+
+            function searchBook() {
+              $.ajax({
+                type: "GET",
+                url:
+                  "/search/books?q=" +
+                  searchQuery +
+                  "&type=" +
+                  searchType.value,
+                dataType: "json",
+                success: function (res) {
+                  resultBody.innerHTML = "";
+
+                  res.result.forEach((book) => {
+                    // 리스트 추가
+                    resultBody.innerHTML +=
+                      '<div class="col-2 mx-auto bg-secondary rounded-3 text-white">' +
+                      book.title +
+                      "<br>" +
+                      book.author +
+                      "<br>" +
+                      book.star +
+                      "<br>" +
+                      book.stock +
+                      "<br>" +
+                      "</div>";
+                  });
+
+                  resultBody.innerHTML += "</div></div>";
+                },
+                error: function (request, status, error) {
+                  res = JSON.parse(request.responseText);
+                  alert(res.message);
+                },
+              });
+            }
+
+            function selectPage(e) {
+              var sender = e.target;
+              if (sender.dataset.page != null) {
+                searchPage = parseInt(sender.dataset.page);
+                searchCenter();
+              }
+            }
+
+            function selectBook(sender) {
+              var lat = sender.dataset.lat;
+              var lng = sender.dataset.lng;
+            }
+          </script>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
