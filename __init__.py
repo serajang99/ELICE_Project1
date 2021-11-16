@@ -8,6 +8,9 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
     )
 
+    from . import update_data
+    update_data.update_data()
+
     @app.route('/')
     def index():
         return render_template('index.html')
