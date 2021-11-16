@@ -15,6 +15,9 @@ def create_app(test_config=None):
     from . import search
     app.register_blueprint(search.bp)
 
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     @app.route('/')
     def index():
         db = get_db()

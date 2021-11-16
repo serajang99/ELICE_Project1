@@ -38,16 +38,26 @@
               {% if g.username %}
               <a href="#">
                 <button type="button" class="btn btn-outline-primary mx-1">
+                  대여기록
+                </button>
+              </a>
+              <a href="#">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  반납하기
+                </button>
+              </a>
+              <a href="{{ url_for('auth.signout') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
                   로그아웃
                 </button>
               </a>
               {% else %}
-              <a href="#">
+              <a href="{{ url_for('auth.signin') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   로그인
                 </button>
               </a>
-              <a href="#">
+              <a href="{{ url_for('auth.signup') }}">
                 <button type="button" class="btn btn-outline-primary ms-1">
                   회원가입
                 </button>
@@ -109,7 +119,7 @@
                   style="height: 300px"
                 >
                   {%for book in books %}
-                  <div class="col-2 mx-auto bg-secondary rounded-3">
+                  <div class="col-2 mx-auto bg-secondary rounded-3 text-white">
                     {{book.title}}<br />
                     {{book.author}}<br />
                     {{book.star}}<br />
