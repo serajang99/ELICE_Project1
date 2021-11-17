@@ -32,14 +32,23 @@ def rent(id):
     print(user_id, book_id)
 
     cursor.execute(
-        'INSERT INTO bookRental (rental_date, user_id, book_id) VALUES (%s, %s, %s)',
-        (datetime.now(), user_id['id'], book_id)
+        'SELECT stock FROM book WHERE id=%s', (book_id)
     )
-    db.commit()
+    stock = cursor.fetchone()
 
-    cursor.execute(
-        'UPDATE book SET stock=stock-1 WHERE id=%s', (book_id)
-    )
-    db.commit()
+    if stock['stock'] == 0:
+        message, messageType = '책이 존재하지 않습니다.', 'danger'
+        flash(message=message, category=messageType)
+    else:
+        cursor.execute(
+            'INSERT INTO bookRental (rental_date, user_id, book_id) VALUES (%s, %s, %s)',
+            (datetime.now(), user_id['id'], book_id)
+        )
+        db.commit()
+
+        cursor.execute(
+            'UPDATE book SET stock=stock-1 WHERE id=%s', (book_id)
+        )
+        db.commit()
 
     return redirect('/')
