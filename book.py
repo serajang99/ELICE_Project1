@@ -32,7 +32,7 @@ def list(id):
             message, messageType = '별점이 유효하지 않습니다.', 'danger'
         else:
             cursor.execute(
-                'INSERT INTO bookReview (rental_date, user_id, book_id, comment, star) VALUES (%s, %s, %s, %s, %s)',
+                'INSERT INTO bookReview (comment_date, user_id, book_id, comment, star) VALUES (%s, %s, %s, %s, %s)',
                 (datetime.now(), user_id['id'], id, comment, star)
             )
             db.commit()
