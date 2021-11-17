@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 from db_connect import get_db
-
+import re
 
 bp = Blueprint("auth", __name__, url_prefix="/user")
 
@@ -12,19 +12,30 @@ bp = Blueprint("auth", __name__, url_prefix="/user")
 def signup():
     if request.method == 'POST':
         username = request.form.get('username', None)
+        email = request.form.get('email', None)
         password = request.form.get('password', None)
+        password2 = request.form.get('password2', None)
 
         db = get_db()
         cursor = db.cursor()
         message, messageType = None, None
 
-        if username is None:
+        check_email = re.compile(
+            '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+        check_name = re.compile(
+            '^[가-힣a-zA-Z]+$')
+
+        if username is None or check_name.match(username) is None:
+            message, messageType = '이름이 유효하지 않습니다.', 'danger'
+        elif email is None or check_email.match(email) is None:
             message, messageType = '아이디가 유효하지 않습니다.', 'danger'
         elif password is None:
             message, messageType = '비밀번호가 유효하지 않습니다.', 'danger'
+        elif password != password2:
+            message, messageType = '비밀번호를 다시 확인해주십시오.', 'danger'
         else:
             cursor.execute(
-                'SELECT id FROM user WHERE username = %s', (username, )
+                'SELECT id FROM user WHERE email = %s', (email, )
             )
             user = cursor.fetchone()
 
@@ -34,14 +45,14 @@ def signup():
         if message is None:
             # 유저 테이블에 추가
             cursor.execute(
-                'INSERT INTO user (username, password) VALUES (%s, %s)',
-                (username, generate_password_hash(password))
+                'INSERT INTO user (username, email, password) VALUES (%s, %s, %s)',
+                (username, email, generate_password_hash(password))
             )
             # 권한 테이블에 추가
-            #cursor.execute(
+            # cursor.execute(
             #    'INSERT INTO permission (username) VALUES (%s)',
             #    (username, )
-            #)
+            # )
             db.commit()
             return redirect(url_for('auth.signin'))
 
@@ -53,7 +64,7 @@ def signup():
 @bp.route('/signin', methods=('GET', 'POST'))
 def signin():
     if request.method == 'POST':
-        username = request.form.get('username', None)
+        email = request.form.get('email', None)
         password = request.form.get('password', None)
 
         db = get_db()
@@ -61,7 +72,7 @@ def signin():
         message, messageType = None, None
 
         cursor.execute(
-            'SELECT * FROM user WHERE username = %s', (username, )
+            'SELECT * FROM user WHERE email = %s', (email, )
         )
         user = cursor.fetchone()
 
@@ -72,7 +83,7 @@ def signin():
 
         if message is None:
             session.clear()
-            session['username'] = user['username']
+            session['email'] = user['email']
             return redirect(url_for('index'))
 
         flash(message=message, category=messageType)
@@ -82,8 +93,8 @@ def signin():
 
 @bp.before_app_request
 def load_logged_in_user():
-    username = session.get('username')
-    g.username = None if username is None else username
+    email = session.get('email')
+    g.email = None if email is None else email
 
 
 @bp.route('/signout')

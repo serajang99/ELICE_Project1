@@ -32,7 +32,7 @@ class Search(Resource):
         #         return make_response(jsonify(message='검색 권한이 없습니다.'), 403)
 
         if q is None:
-            print(q)
+            # print(q)
             return jsonify(result=[])
         else:
             # limit = 8
@@ -69,8 +69,12 @@ class Search(Resource):
                 cursor.execute(
                     f'SELECT * FROM book WHERE author LIKE "%{q}%" ORDER BY id'
                 )
+            elif type == 'publisher':
+                cursor.execute(
+                    f'SELECT * FROM book WHERE publisher LIKE "%{q}%" ORDER BY id'
+                )
             result = cursor.fetchall()
-            print(result)
+            # print(result)
         return jsonify(result=result)
 
 
