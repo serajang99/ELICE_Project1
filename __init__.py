@@ -18,6 +18,12 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import rent
+    app.register_blueprint(rent.bp)
+
+    from . import book
+    app.register_blueprint(book.bp)
+
     @app.route('/')
     def index():
         db = get_db()
