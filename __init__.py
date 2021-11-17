@@ -20,7 +20,7 @@ def create_app(test_config=None):
 
     from . import rent
     app.register_blueprint(rent.bp)
-    
+
     from . import book
     app.register_blueprint(book.bp)
 

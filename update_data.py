@@ -14,8 +14,8 @@ def update_data():
     db = db_connect.MysqlPool()
     cursor = db.cursor()
 
-    cursor.execute('TRUNCATE book')
-    db.commit()
+    # cursor.execute('TRUNCATE book')
+    # db.commit()
 
     query = """INSERT INTO book (title, publisher, author, publication_date, pages, isbn, description, link, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 

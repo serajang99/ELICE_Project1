@@ -118,7 +118,7 @@
                   class="row my-2 mx-auto"
                   style="height: 500px"
                 >
-                  {%for book in books %}
+                  {% for book in books %}
                   <div class="col-2 mx-auto bg-secondary rounded-3 text-white">
                     <a
                       class="btn btn-default text-white"
@@ -129,7 +129,7 @@
                     {{'★'*book.star+'☆'*(5-book.star)}}<br />
                     {{book.stock}}권<br />
                     {% if g.email %}
-                    <a href="{{ url_for('rent.rent') }}">
+                    <a href="{{ url_for('rent.rent', id=book.id) }}">
                       <button
                         type="button"
                         class="
