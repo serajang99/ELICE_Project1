@@ -8,6 +8,34 @@ import re
 bp = Blueprint("book", __name__, url_prefix="/book")
 
 
-@bp.route('/list', methods=('GET', 'POST'))
-def list():
-    return render_template('book.html')
+@bp.route('/list/<id>', methods=('GET', 'POST'))
+def list(id):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute('SELECT * FROM book WHERE id = %s' % id)
+    book = cursor.fetchone()
+
+    if request.method == 'POST':
+
+        message, messageType = None, None
+        star = int(request.form['rating'])
+        comment = request.form['comment']
+        cursor.execute('SELECT id FROM user WHERE email = %s',
+                       (session['email']))
+        user_id = cursor.fetchone()
+        print(star, comment, user_id, id)
+
+        if comment is None:
+            message, messageType = '댓글이 유효하지 않습니다.', 'danger'
+        else:
+            cursor.execute(
+                'INSERT INTO bookReview (user_id, book_id, comment, star) VALUES (%s, %s, %s, %s)',
+                (user_id['id'], id, comment, star)
+            )
+            db.commit()
+
+        flash(message=message, category=messageType)
+
+    db.close()
+    return render_template('book.html', book=book)
