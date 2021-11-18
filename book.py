@@ -11,7 +11,7 @@ bp = Blueprint("book", __name__, url_prefix="/book")
 
 @bp.route('/list/<id>', methods=('GET', 'POST'))
 def list(id):
-    book = Book.query.filter(Book.id == id)
+    book = Book.query.filter(Book.id == id).first()
     print(book)
 
     if request.method == 'POST':
@@ -20,8 +20,14 @@ def list(id):
         star = int(request.form['rating'])
         comment = request.form['comment']
 
-        user = User.query.filter(User.email == session['email']).first()
-        user_id = user.id
+        print(session)
+
+        if session.get('email') is not None:
+            user = User.query.filter(User.email == session['email']).first()
+            user_id = user.id
+        else:
+            message, messageType = '로그인이 필요한 기능입니다.', 'danger'
+            return render_template('book.html', book=book)
 
         if comment is None:
             message, messageType = '댓글이 유효하지 않습니다.', 'danger'
@@ -32,12 +38,18 @@ def list(id):
             db.session.add(review)
             db.session.commit()
 
-            book_reviews = BookReview.query(star).filter(
+            book_stars = BookReview.query.filter(
                 BookReview.book_id == id).all()
-            print(book_reviews)
+            print(book_stars)
 
-            book_star = Book.query(star).filter(Book.book_id == id).first()
-            print(book_star)
+            cnt = 0
+            sum = 0
+            for star in book_stars:
+                cnt += 1
+                sum += int(star.star)
+
+            book_change_star = Book.query.filter(Book.id == id).first()
+            book_change_star.star = round(sum/cnt)
             db.session.commit()
 
         flash(message=message, category=messageType)
