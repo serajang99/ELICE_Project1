@@ -3,7 +3,8 @@ from flask_restful import Api, Resource
 
 from math import ceil
 
-from .db_connect import get_db
+from .db_connect import db
+from models import Book
 
 bp = Blueprint('search', __name__, url_prefix='/search')
 api = Api(bp)
@@ -13,9 +14,6 @@ class Search(Resource):
     def get(self):
         q = request.args.get('q', None)
         type = request.args.get('type', None)
-
-        db = get_db()
-        cursor = db.cursor()
 
         # # 권한 체크
         # username = session.get('username', None)
@@ -32,12 +30,10 @@ class Search(Resource):
         #         return make_response(jsonify(message='검색 권한이 없습니다.'), 403)
 
         if q is None:
-            # print(q)
             return jsonify(result=[])
         else:
             # limit = 8
 
-            # 센터명으로 검색
             if type == 'title':
                 # cursor.execute(
                 #     f"SELECT COUNT(*) As count FROM book WHERE title LIKE '%{q}%'"
@@ -50,32 +46,17 @@ class Search(Resource):
                 #     page = totalPage
 
                 # offset = (page - 1) * limit
-                cursor.execute(
-                    f'SELECT * FROM book WHERE title LIKE "%{q}%" ORDER BY id'
-                )
+
+                search_books = Book.query.filter(
+                    Book.title.like(f"%{q}%")).order_by(Book.id).all()
             elif type == 'author':
-                # cursor.execute(
-                #     f"SELECT COUNT(*) As count FROM center WHERE full_address LIKE '%{q}%'"
-                # )
-                # totalPage = ceil(int(cursor.fetchone()['count']) / 10)
-                # if totalPage == 0:
-                #     page = 1
-                #     totalPage = 1
-                # elif page >= totalPage:
-                #     page = totalPage
-
-                # offset = (page - 1) * limit
-
-                cursor.execute(
-                    f'SELECT * FROM book WHERE author LIKE "%{q}%" ORDER BY id'
-                )
+                search_books = Book.query.filter(
+                    Book.author.like(f"%{q}%")).order_by(Book.id).all()
             elif type == 'publisher':
-                cursor.execute(
-                    f'SELECT * FROM book WHERE publisher LIKE "%{q}%" ORDER BY id'
-                )
-            result = cursor.fetchall()
-            # print(result)
-        return jsonify(result=result)
+                search_books = Book.query.filter(
+                    Book.publisher.like(f"%{q}%")).order_by(Book.id).all()
+
+        return jsonify(result=search_books)
 
 
 api.add_resource(Search, '/books')

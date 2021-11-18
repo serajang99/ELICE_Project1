@@ -2,6 +2,8 @@ import models
 import db_connect
 import openpyxl
 from flask_apscheduler import APScheduler
+from models import Book
+from db_connect import db
 
 scheduler = APScheduler()
 
@@ -11,13 +13,13 @@ def update_data():
     wb = openpyxl.load_workbook(filename='data/book.xlsx')
     ws = wb.active
 
-    db = db_connect.MysqlPool()
-    cursor = db.cursor()
+    # db = db_connect.MysqlPool()
+    # cursor = db.cursor()
 
     # cursor.execute('TRUNCATE book')
     # db.commit()
 
-    query = """INSERT INTO book (title, publisher, author, publication_date, pages, isbn, description, link, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    # query = """INSERT INTO book (title, publisher, author, publication_date, pages, isbn, description, link, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
     for r in range(2, ws.max_row):
 
@@ -44,14 +46,14 @@ def update_data():
             'link': link,
             'img': img,
         }
-        book = models.Book(data)
+        book = Book(data)
 
-        values = (book.title, book.publisher, book.author, book.publication_date,
-                  book.pages, book.isbn, book.description, book.link, book.img)
+        # values = (book.title, book.publisher, book.author, book.publication_date,
+        #           book.pages, book.isbn, book.description, book.link, book.img)
 
-        cursor.execute(query, values)
-        db.commit()
+        # cursor.execute(query, values)
+        db.session.add(book)
+        db.session.commit()
 
     print('데이터 저장 완료')
-
-    cursor.close()
+    db.session.close()

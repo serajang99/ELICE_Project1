@@ -1,38 +1,29 @@
 from flask import Flask, render_template
-from .db_connect import get_db
+from db_connect import db
+from models import Book
+from . import update_data
+from . import auth
+from . import book
+from . import search
+from . import rent
+
+app = Flask(__name__)
+
+app.config.from_mapping(
+    SECRET_KEY='dev',
+)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost:3306/elice_library'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.register_blueprint(auth.bp)
+app.register_blueprint(book.bp)
+app.register_blueprint(search.bp)
+app.register_blueprint(rent.bp)
+
+db.init_app(app)
 
 
-def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
-
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-    )
-
-    # from . import update_data
-    # update_data.update_data()
-
-    from . import search
-    app.register_blueprint(search.bp)
-
-    from . import auth
-    app.register_blueprint(auth.bp)
-
-    from . import rent
-    app.register_blueprint(rent.bp)
-
-    from . import book
-    app.register_blueprint(book.bp)
-
-    @app.route('/')
-    def index():
-        db = get_db()
-        cursor = db.cursor()
-
-        cursor.execute(
-            f'SELECT * FROM book'
-        )
-        books = cursor.fetchall()
-        return render_template('index.html', books=books)
-
-    return app
+@app.route('/')
+def index():
+    book_list = Book.query.all()
+    return render_template('index.html', books=book_list)
