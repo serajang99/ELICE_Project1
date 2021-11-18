@@ -33,7 +33,7 @@
                   대여기록
                 </button>
               </a>
-              <a href="{{ url_for('rent.ret')}}">
+              <a href="{{ url_for('rent.ret',id=-1)}}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   반납하기
                 </button>
@@ -46,7 +46,12 @@
             </form>
           </div>
         </nav>
-        <div></div>
+        <div class="container-fluid">
+          <div class="p-5 mb-5 bg-secondary rounded-3">
+            {% block rent_ret %} {% endblock %} {% block rent_list %} {%
+            endblock %}
+          </div>
+        </div>
       </div>
     </main>
   </body>

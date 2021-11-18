@@ -1,0 +1,13 @@
+{% extends 'rent.html' %} {% block rent_list %} {% for book in books %}
+<div class="mx-auto bg-secondary rounded-3 text-white d-flex">
+  <img
+    src="../../static/{{book.img}}"
+    height="100"
+    class="d-inline-block align-text-top"
+  />
+  {{book.title}}<br />
+  {{book.author}}<br />
+  {{'★'*book.star+'☆'*(5-book.star)}}<br />
+  <br />
+</div>
+{%endfor%} {% endblock %}
