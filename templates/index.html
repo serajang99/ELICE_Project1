@@ -37,28 +37,28 @@
             <form class="d-flex">
               {% if g.email %}
               <a href="{{ url_for('rent.list')}}">
-                <button type="button" class="btn btn-outline-primary mx-1">
+                <button type="button" class="btn btn-outline-primary mx-2">
                   대여기록
                 </button>
               </a>
               <a href="{{ url_for('rent.ret',id=-1)}}">
-                <button type="button" class="btn btn-outline-primary mx-1">
+                <button type="button" class="btn btn-outline-primary mx-2">
                   반납하기
                 </button>
               </a>
               <a href="{{ url_for('auth.signout') }}">
-                <button type="button" class="btn btn-outline-primary mx-1">
+                <button type="button" class="btn btn-outline-primary ms-auto">
                   로그아웃
                 </button>
               </a>
               {% else %}
               <a href="{{ url_for('auth.signin') }}">
-                <button type="button" class="btn btn-outline-primary mx-1">
+                <button type="button" class="btn btn-outline-primary mx-2">
                   로그인
                 </button>
               </a>
               <a href="{{ url_for('auth.signup') }}">
-                <button type="button" class="btn btn-outline-primary ms-1">
+                <button type="button" class="btn btn-outline-primary ms-auto">
                   회원가입
                 </button>
               </a>
@@ -67,180 +67,165 @@
           </div>
         </nav>
 
-        <div class="p-5 mb-5 bg-secondary rounded-3 text-center">
-          <div class="container-fluid py-5 text-white">
-            <h1 class="display-6 fw-bold">엘리스 도서관</h1>
+        <div class="p-10 mb-3 bg-light rounded-3 text-center">
+          <div class="container-fluid py-5">
+            <h1 class="display-4 fw-bold">엘리스 도서관</h1>
             <span class="lead col-md-7 fs-5"
               >엘리스 도서관에 오신 것을 환영합니다!</span
             >
           </div>
         </div>
 
-        <div class="table-responsive">
+        <div class="container-fluid">
+          <!-- 검색 -->
           <div class="d-flex flex-row">
-            <div class="container-fluid">
-              <!-- 검색 -->
-              <div class="d-flex flex-row">
-                <select
-                  id="searchType"
-                  class="form-select me-3"
-                  style="max-width: 15%; height: 100%"
-                >
-                  <option value="title">제목</option>
-                  <option value="author">저자</option>
-                  <option value="publisher">출판사</option>
-                </select>
-                <input
-                  type="text"
-                  class="form-control mb-3"
-                  id="searchBox"
-                  placeholder="검색"
-                />
-              </div>
-              {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %} {% for category, message in messages %}
-              <div class="alert alert-{{category}} text-center" role="alert">
-                {{ message }}
-              </div>
-              {% endfor %} {% endif %} {% endwith %}
-              <!-- 책 결과 -->
-              <!-- <thead class="table-light">
-                                <tr>
-                                    <th scope="col">센터유형</th>
-                                    <th scope="col">센터명</th>
-                                    <th scope="col">시설명</th>
-                                    <th scope="col">주소</th>
-                                    <th scope="col">전화번호</th>
-                                </tr>
-                            </thead> -->
+            <select
+              id="searchType"
+              class="form-select me-3"
+              style="max-width: 15%; height: 100%"
+            >
+              <option value="title">제목</option>
+              <option value="author">저자</option>
+              <option value="publisher">출판사</option>
+            </select>
+            <input
+              type="text"
+              class="form-control mb-3"
+              id="searchBox"
+              placeholder="검색"
+            />
+          </div>
 
+          <div class="container-fluid py-2">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{category}} text-center " role="alert">
+              {{ message }}
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+          </div>
+
+          <div class="container-fluid text-center my-3">
+            <div
+              id="resultBody"
+              class="row my-auto mx-auto"
+              style="height: auto"
+            >
+              {% for book in books %}
               <div
-                class="container-fluid text-center my-3"
-                style="height: auto"
+                class="col-sm-3 bg-secondary rounded-3 text-white ms-auto mb-2"
+                style="height: 400px"
               >
-                <div
-                  id="resultBody"
-                  class="row my-2 mx-auto"
-                  style="height: 500px"
-                >
-                  {% for book in books %}
-                  <div class="col-2 mx-auto bg-secondary rounded-3 text-white">
-                    <a
-                      class="btn btn-default text-white"
-                      href="{{ url_for('book.list', id=book.id) }}"
-                      >{{book.title}}</a
-                    ><br />
-                    {{book.author}}<br />
-                    {{'★'*book.star+'☆'*(5-book.star)}}<br />
-                    {{book.stock}}권<br />
-                    {% if g.email %}
-                    <a href="{{ url_for('rent.rent', id=book.id) }}">
-                      <button
-                        type="button"
-                        class="
-                          btn btn-outline-primary
-                          mx-1
-                          bg-primary
-                          text-white
-                        "
-                      >
-                        대여하기
-                      </button>
-                    </a>
-                    {% endif %}
-                  </div>
-                  {%endfor%}
-                </div>
+                <img
+                  src="../../static/{{book.img}}"
+                  height="200px"
+                  class="d-inline-block align-text-top"
+                />
+                <a
+                  class="btn btn-default text-white"
+                  href="{{ url_for('book.list', id=book.id) }}"
+                  >{{book.title}} </a
+                ><br />
+                {{book.author}}<br />
+                {{'★'*book.star+'☆'*(5-book.star)}}<br />
+                {{book.stock}}권<br />
+                {% if g.email %}
+                <a href="{{ url_for('rent.rent', id=book.id) }}">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary mx-1 bg-primary text-white"
+                  >
+                    대여하기
+                  </button>
+                </a>
+                {% endif %}
               </div>
-
-              <!-- pagination -->
-              <nav>
-                <ul class="pagination justify-content-center" id="pagination">
-                  <li class="page-item">
-                    <a
-                      class="page-link"
-                      data-page="1"
-                      href="#"
-                      aria-label="Previous"
-                    >
-                      &laquo;
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" data-page="1" href="#">1</a>
-                  </li>
-                  <li class="page-item" id="last-page">
-                    <a class="page-link" href="#" aria-label="Next">
-                      &raquo;
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              {%endfor%}
             </div>
           </div>
-          <script>
-            var searchBox = document.getElementById("searchBox");
-            var resultBody = document.getElementById("resultBody");
-            var searchType = document.getElementById("searchType");
-            var searchQuery = null;
 
-            searchBox.onkeydown = function (e) {
-              if (e.keyCode != 13) return;
-              searchQuery = searchBox.value;
-              searchBook();
-            };
-
-            function searchBook() {
-              $.ajax({
-                type: "GET",
-                url:
-                  "/search/books?q=" +
-                  searchQuery +
-                  "&type=" +
-                  searchType.value,
-                dataType: "json",
-                success: function (res) {
-                  resultBody.innerHTML = "";
-
-                  res.result.forEach((book) => {
-                    // 리스트 추가
-                    resultBody.innerHTML +=
-                      '<div class="col-2 mx-auto bg-secondary rounded-3 text-white">' +
-                      book.title +
-                      "<br>" +
-                      book.author +
-                      "<br>" +
-                      book.star +
-                      "<br>" +
-                      book.stock +
-                      "<br>" +
-                      "</div>";
-                  });
-
-                  resultBody.innerHTML += "</div></div>";
-                },
-                error: function (request, status, error) {
-                  res = JSON.parse(request.responseText);
-                  alert(res.message);
-                },
-              });
-            }
-
-            function selectPage(e) {
-              var sender = e.target;
-              if (sender.dataset.page != null) {
-                searchPage = parseInt(sender.dataset.page);
-                searchCenter();
-              }
-            }
-
-            function selectBook(sender) {
-              var lat = sender.dataset.lat;
-              var lng = sender.dataset.lng;
-            }
-          </script>
+          <!-- pagination -->
+          <nav>
+            <ul class="pagination justify-content-center" id="pagination">
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  data-page="1"
+                  href="#"
+                  aria-label="Previous"
+                >
+                  &laquo;
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" data-page="1" href="#">1</a>
+              </li>
+              <li class="page-item" id="last-page">
+                <a class="page-link" href="#" aria-label="Next"> &raquo; </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
+      <script>
+        var searchBox = document.getElementById("searchBox");
+        var resultBody = document.getElementById("resultBody");
+        var searchType = document.getElementById("searchType");
+        var searchQuery = null;
+
+        searchBox.onkeydown = function (e) {
+          if (e.keyCode != 13) return;
+          searchQuery = searchBox.value;
+          searchBook();
+        };
+
+        function searchBook() {
+          $.ajax({
+            type: "GET",
+            url: "/search/books?q=" + searchQuery + "&type=" + searchType.value,
+            dataType: "json",
+            success: function (res) {
+              resultBody.innerHTML = "";
+
+              res.result.forEach((book) => {
+                // 리스트 추가
+                resultBody.innerHTML +=
+                  '<div class="col-sm-3 bg-secondary rounded-3 text-white">' +
+                  '<a class="btn btn-default text-white">' +
+                  book.title +
+                  "</a>" +
+                  "<br />" +
+                  book.author +
+                  "<br />" +
+                  book.star +
+                  "<br />" +
+                  book.stock +
+                  "<br>" +
+                  "</div>";
+              });
+
+              //resultBody.innerHTML += "</div></div>";
+            },
+            error: function (request, status, error) {
+              res = JSON.parse(request.responseText);
+              alert(res.message);
+            },
+          });
+        }
+
+        function selectPage(e) {
+          var sender = e.target;
+          if (sender.dataset.page != null) {
+            searchPage = parseInt(sender.dataset.page);
+            searchCenter();
+          }
+        }
+
+        function selectBook(sender) {
+          var lat = sender.dataset.lat;
+          var lng = sender.dataset.lng;
+        }
+      </script>
     </main>
   </body>
 </html>

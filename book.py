@@ -20,7 +20,7 @@ def list(id):
         star = int(request.form['rating'])
         comment = request.form['comment']
 
-        print(session)
+        # print(session)
 
         if session.get('email') is not None:
             user = User.query.filter(User.email == session['email']).first()
@@ -40,7 +40,7 @@ def list(id):
 
             book_stars = BookReview.query.filter(
                 BookReview.book_id == id).all()
-            print(book_stars)
+            # print(book_stars)
 
             cnt = 0
             sum = 0

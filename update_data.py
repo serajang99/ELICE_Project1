@@ -1,9 +1,9 @@
-import models
-import db_connect
 import openpyxl
 from flask_apscheduler import APScheduler
 from models import Book
 from db_connect import db
+import os
+import natsort
 
 scheduler = APScheduler()
 
@@ -13,13 +13,8 @@ def update_data():
     wb = openpyxl.load_workbook(filename='data/book.xlsx')
     ws = wb.active
 
-    # db = db_connect.MysqlPool()
-    # cursor = db.cursor()
-
-    # cursor.execute('TRUNCATE book')
-    # db.commit()
-
-    # query = """INSERT INTO book (title, publisher, author, publication_date, pages, isbn, description, link, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    img_dir = os.listdir('./static/img/book_img')
+    img_list = natsort.natsorted(img_dir)
 
     for r in range(2, ws.max_row):
 
@@ -34,7 +29,8 @@ def update_data():
         isbn = ws.cell(r, 7).value
         description = ws.cell(r, 8).value
         link = ws.cell(r, 9).value
-        img = f'img/book_img/{r-1}.png'
+        img_value = img_list[r-2]
+        img = f'img/book_img/{img_value}'
         data = {
             'title': title,
             'publisher': publisher,
@@ -48,10 +44,6 @@ def update_data():
         }
         book = Book(data)
 
-        # values = (book.title, book.publisher, book.author, book.publication_date,
-        #           book.pages, book.isbn, book.description, book.link, book.img)
-
-        # cursor.execute(query, values)
         db.session.add(book)
         db.session.commit()
 

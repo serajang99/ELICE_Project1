@@ -15,6 +15,7 @@ app.config.from_mapping(
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost:3306/elice_library'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 app.register_blueprint(auth.bp)
 app.register_blueprint(book.bp)
 app.register_blueprint(search.bp)
@@ -25,5 +26,8 @@ db.init_app(app)
 
 @app.route('/')
 def index():
+
+    # update_data.update_data()
+
     book_list = Book.query.all()
     return render_template('index.html', books=book_list)
