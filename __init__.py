@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from db_connect import db
 from models import Book
 from . import update_data
@@ -6,6 +6,7 @@ from . import auth
 from . import book
 from . import search
 from . import rent
+import math
 
 app = Flask(__name__)
 
@@ -29,5 +30,9 @@ def index():
 
     # update_data.update_data()
 
-    book_list = Book.query.all()
-    return render_template('index.html', books=book_list)
+    page = request.args.get('page', type=int, default=1)  # 페이지
+
+    bookList = Book.query.order_by(Book.id.asc())
+    bookList = bookList.paginate(page, per_page=8)
+
+    return render_template('index.html', books=bookList)

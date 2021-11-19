@@ -105,71 +105,104 @@
             {% endfor %} {% endif %} {% endwith %}
           </div>
 
-          <div class="container-fluid text-center my-3">
-            <div
-              id="resultBody"
-              class="row my-auto mx-auto"
-              style="height: auto"
-            >
-              {% for book in books %}
+          <div id="search-result">
+            <div class="container-fluid text-center my-3">
               <div
-                class="col-sm-3 bg-secondary rounded-3 text-white ms-auto mb-2"
-                style="height: 400px"
+                id="resultBody"
+                class="row my-auto mx-auto"
+                style="height: auto"
               >
-                <img
-                  src="../../static/{{book.img}}"
-                  height="200px"
-                  class="d-inline-block align-text-top"
-                />
-                <a
-                  class="btn btn-default text-white"
-                  href="{{ url_for('book.list', id=book.id) }}"
-                  >{{book.title}} </a
-                ><br />
-                {{book.author}}<br />
-                {{'★'*book.star+'☆'*(5-book.star)}}<br />
-                {{book.stock}}권<br />
-                {% if g.email %}
-                <a href="{{ url_for('rent.rent', id=book.id) }}">
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary mx-1 bg-primary text-white"
-                  >
-                    대여하기
-                  </button>
-                </a>
-                {% endif %}
-              </div>
-              {%endfor%}
-            </div>
-          </div>
-
-          <!-- pagination -->
-          <nav>
-            <ul class="pagination justify-content-center" id="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  data-page="1"
-                  href="#"
-                  aria-label="Previous"
+                {% for book in books.items %}
+                <div
+                  class="
+                    col-sm-3
+                    bg-light
+                    rounded-3
+                    ms-auto
+                    mb-2
+                    p-2
+                    align-self-center
+                  "
+                  style="height: 370px"
                 >
-                  &laquo;
-                </a>
-              </li>
+                  <div style="height: 200px">
+                    <img
+                      src="../../static/{{book.img}}"
+                      height="200px"
+                      class="d-inline-block align-text-top"
+                    />
+                  </div>
+                  <a
+                    style="height: 70px"
+                    class="btn btn-default"
+                    href="{{ url_for('book.list', id=book.id) }}"
+                    >{{book.title}} </a
+                  ><br />
+                  {{book.author}}<br />
+                  {{'★'*book.star+'☆'*(5-book.star)}}<br />
+                  {{book.stock}}권<br />
+                  {% if g.email %}
+                  <a href="{{ url_for('rent.rent', id=book.id) }}">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary mx-1 bg-primary text-white"
+                    >
+                      대여하기
+                    </button>
+                  </a>
+                  {% endif %}
+                </div>
+                {%endfor%}
+              </div>
+            </div>
+            <!-- 페이징처리 시작 -->
+            <ul class="pagination justify-content-center">
+              <!-- 이전페이지 -->
+              {% if books.has_prev %}
               <li class="page-item">
-                <a class="page-link" data-page="1" href="#">1</a>
+                <a class="page-link" href="?page={{ books.prev_num }}"><</a>
               </li>
-              <li class="page-item" id="last-page">
-                <a class="page-link" href="#" aria-label="Next"> &raquo; </a>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#"
+                  ><</a
+                >
               </li>
+              {% endif %} {% for page_num in books.iter_pages() %} {% if
+              page_num %} {% if page_num != books.page %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_num }}"
+                  >{{ page_num }}</a
+                >
+              </li>
+              {% else %}
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">{{ page_num }}</a>
+              </li>
+              {% endif %} {% else %}
+              <li class="disabled">
+                <a class="page-link" href="#">...</a>
+              </li>
+              {% endif %} {% endfor %}
+              <!-- 다음페이지 -->
+              {% if books.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ books.next_num }}">></a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#"
+                  >></a
+                >
+              </li>
+              {% endif %}
             </ul>
-          </nav>
+          </div>
         </div>
       </div>
       <script>
         var searchBox = document.getElementById("searchBox");
-        var resultBody = document.getElementById("resultBody");
+        var searchResult = document.getElementById("search-result");
         var searchType = document.getElementById("searchType");
         var searchQuery = null;
 
@@ -185,45 +218,14 @@
             url: "/search/books?q=" + searchQuery + "&type=" + searchType.value,
             dataType: "json",
             success: function (res) {
-              resultBody.innerHTML = "";
-
-              res.result.forEach((book) => {
-                // 리스트 추가
-                resultBody.innerHTML +=
-                  '<div class="col-sm-3 bg-secondary rounded-3 text-white">' +
-                  '<a class="btn btn-default text-white">' +
-                  book.title +
-                  "</a>" +
-                  "<br />" +
-                  book.author +
-                  "<br />" +
-                  book.star +
-                  "<br />" +
-                  book.stock +
-                  "<br>" +
-                  "</div>";
-              });
-
-              //resultBody.innerHTML += "</div></div>";
+              searchResult.innerHTML = "";
+              searchResult.innerHTML = res;
             },
             error: function (request, status, error) {
               res = JSON.parse(request.responseText);
               alert(res.message);
             },
           });
-        }
-
-        function selectPage(e) {
-          var sender = e.target;
-          if (sender.dataset.page != null) {
-            searchPage = parseInt(sender.dataset.page);
-            searchCenter();
-          }
-        }
-
-        function selectBook(sender) {
-          var lat = sender.dataset.lat;
-          var lng = sender.dataset.lng;
         }
       </script>
     </main>
