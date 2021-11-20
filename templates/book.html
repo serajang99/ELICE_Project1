@@ -43,7 +43,7 @@
         text-align: left;
       }
       #myform input[type="radio"]:checked ~ label {
-        text-shadow: 0 0 0 #a00; /* 마우스 클릭 체크 */
+        text-shadow: 0 0 0 #ffeb46; /* 마우스 클릭 체크 */
       }
     </style>
     <title>Elice Project</title>
@@ -98,9 +98,9 @@
           </div>
         </nav>
 
-        <div class="p-5 mb-5 bg-light rounded-3 text-center">
-          <div class="bg-white rounded-5">
-            <div class="p-5 d-flex">
+        <div class="p-5 mb-5 bg-light rounded-3">
+          <div class="bg-white rounded-5 ">
+            <div class="p-5 d-inline-flex text-center">
               <img
                 src="../../static/{{book.img}}"
                 height="350px"
@@ -110,54 +110,63 @@
                 <tbody>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">책 제목</td>
-                    <td class="h6">{{book.title}}</td>
+                    <td width="500" class="h6">{{book.title}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">저자</td>
-                    <td class="h6">{{book.author}}</td>
+                    <td width="500" class="h6">{{book.author}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">출판사</td>
-                    <td class="h6">{{book.publisher}}</td>
+                    <td width="500" class="h6">{{book.publisher}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">출간일</td>
-                    <td class="h6">{{book.publication_date}}</td>
+                    <td width="500" class="h6">{{book.publication_date}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">페이지 수</td>
-                    <td class="h6">{{book.pages}}</td>
+                    <td width="500" class="h6">{{book.pages}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">ISBN 코드</td>
-                    <td class="h6">{{book.isbn}}</td>
+                    <td width="500" class="h6">{{book.isbn}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="container-fluid py-5">
-              <table>
-                <thead>
-                  <th>책 소개</th>
+            <div class="container-fluid p-5">
+              <table class="mx-5">
+                <thead class="my-3">
+                  <th class="h5 fw-bold my-3">책 소개</th>
                 </thead>
-                <tbody>
+                <tbody class="my-3">
+                  <tr height="10"><td> </td></tr>
                   <tr>
-                    <td>{{book.description}}</td>
+                    <td class="text-left">{{book.description}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div class="container-fluid py-5 bg-white my-5">
-
-            <div class="comments-wrap">
+          <div class="container-fluid p-5 bg-white my-5">
+            <div class="comments-wrap" style="margin-bottom: 10px">
               댓글 게시판
+              {% for review in reviews %}
+              <div class="p-5 bg-light rounded-3">
+                <div class="p-1">익명{{review.user_id}}</div>
+                <div class="d-flex p-2">
+                  <div style="width: 90%; margin-right:10px;">{{review.comment}}</div>
+                  <div style="width: 10%;">{{'★'*book.star+'☆'*(5-book.star)}}</div>
+                </div>
+              </div>
+              {%endfor%}
             <div>
             <div class="comment-wrap">
               <form method="POST" id="myform">
-                <div>
-                  <fieldset>
+                <div style="margin-bottom: 5px">
+                  <fieldset class="align-right">
                     <input
                       type="radio"
                       name="rating"
@@ -190,17 +199,20 @@
                     /><label for="rate5">⭐</label>
                   </fieldset>
                 </div>
-                <input
-                  type="text"
-                  class="form-control mb-3"
-                  id="commentBox"
-                  name="comment"
-                  placeholder="댓글달기"
-                />
-                <div class="">
-                  <button type="submit" class="btn btn-primary btn-md">
-                    댓글달기
-                  </button>
+                <div class="d-flex">
+                  <input
+                    type="text"
+                    class="form-control mb-3"
+                    id="commentBox"
+                    name="comment"
+                    placeholder="댓글을 작성하세요"
+                    style="width: 90%; margin-right:10px;"
+                  />
+                  <div style="width: 10%">
+                    <button type="submit" class="btn btn-primary btn-md"  style="width: 70px">
+                      등록
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

@@ -50,4 +50,6 @@ def list(id):
 
         flash(message=message, category=messageType)
 
-    return render_template('book.html', book=book)
+    reviews = BookReview.query.filter(BookReview.book_id == id).all()
+
+    return render_template('book.html', book=book, reviews=reviews)
