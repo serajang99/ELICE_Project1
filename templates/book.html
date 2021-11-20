@@ -152,20 +152,20 @@
 
           <div class="container-fluid p-5 bg-white my-5">
             <div class="comments-wrap" style="margin-bottom: 10px">
-              댓글 게시판
+              <div style="margin-bottom: 10px;">댓글 게시판</div>
               {% for review in reviews %}
-              <div class="p-5 bg-light rounded-3">
-                <div class="p-1">익명{{review.user_id}}</div>
+              <div class="p-2 bg-light border border-dark rounded-3" style="margin-bottom: 10px">
+                <div class="p-1" style="margin-left:auto">익명{{review.user_id}}</div>
                 <div class="d-flex p-2">
-                  <div style="width: 90%; margin-right:10px;">{{review.comment}}</div>
-                  <div style="width: 10%;">{{'★'*book.star+'☆'*(5-book.star)}}</div>
+                  <div style="width: 80%; margin-left:auto; margin-right:10px;">{{review.comment}}</div>
+                  <div style="width: 10%; margin-right:auto;">{{'★'*review.star+'☆'*(5-review.star)}}</div>
                 </div>
               </div>
               {%endfor%}
             <div>
             <div class="comment-wrap">
               <form method="POST" id="myform">
-                <div style="margin-bottom: 5px">
+                <div style="margin-bottom: 5px; margin-top: 50px">
                   <fieldset class="align-right">
                     <input
                       type="radio"
@@ -200,6 +200,7 @@
                   </fieldset>
                 </div>
                 <div class="d-flex">
+                  {% if g.email %}
                   <input
                     type="text"
                     class="form-control mb-3"
@@ -208,11 +209,21 @@
                     placeholder="댓글을 작성하세요"
                     style="width: 90%; margin-right:10px;"
                   />
+                  
                   <div style="width: 10%">
-                    <button type="submit" class="btn btn-primary btn-md"  style="width: 70px">
+                    <button type="submit" class="btn btn-primary btn-md"  style="width: 100%">
                       등록
                     </button>
                   </div>
+                  {%else%}
+                  <input type="text" class="form-control mb-3" id="commentBox" name="comment" placeholder="로그인이 필요한 기능입니다"
+                    style="width: 90%; margin-right:10px;" />
+                  <div style="width: 10%">
+                    <button type="submit" class="btn btn-primary btn-md disabled" style="width: 100%">
+                      등록
+                    </button>
+                  </div>
+                  {%endif%}
                 </div>
               </form>
             </div>
