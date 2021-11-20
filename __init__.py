@@ -6,7 +6,6 @@ from . import auth
 from . import book
 from . import search
 from . import rent
-import math
 
 app = Flask(__name__)
 
@@ -19,8 +18,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.register_blueprint(auth.bp)
 app.register_blueprint(book.bp)
-app.register_blueprint(search.bp)
 app.register_blueprint(rent.bp)
+app.register_blueprint(search.bp)
 
 db.init_app(app)
 
