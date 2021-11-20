@@ -1,21 +1,33 @@
 {% extends 'rent.html' %} {% block rent_ret %} {% for book in books %}
-<div class="mx-auto bg-secondary rounded-3 text-white d-flex">
-  <img
-    src="../../static/{{book.img}}"
-    height="100"
-    class="d-inline-block align-text-top"
-  />
-  {{book.title}}<br />
-  {{book.author}}<br />
-  {{'★'*book.star+'☆'*(5-book.star)}}<br />
-  <a href="{{ url_for('rent.ret', id=book.id) }}">
-    <button
-      type="button"
-      class="btn btn-outline-primary mx-1 bg-primary text-white"
-    >
-      반납하기
-    </button>
-  </a>
-  <br />
+<div class="p-5 bg-light rounded-3 d-flex">
+  <img src="../../static/{{book.img}}" height="120px" class="mx-3 my-2" />
+  <table style="height: 120px" class="table table-light ml-3">
+    <thead>
+      <tr>
+        <th scope="col">책 제목</th>
+        <th scope="col">저자</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="align-middle">
+        <td class="h6 fw-bold">{{book.title}}</td>
+        <td width="200" class="h6">{{book.author}}</td>
+        <td width="200">
+          <button
+            type="button"
+            class="
+              btn btn-outline-primary
+              mx-1
+              bg-primary
+              text-white
+              align-middle
+            "
+          >
+            반납하기
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 {%endfor%} {% endblock %}

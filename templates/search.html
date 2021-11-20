@@ -11,18 +11,20 @@
         style="height: 370px"
       >
         {% endif %}
-        <div style="height: 200px">
-          <img
-            src="../../static/{{book.img}}"
-            height="200px"
-            class="d-inline-block align-text-top"
-          />
-        </div>
         <a
-          style="height: 70px"
           class="btn btn-default"
           href="{{ url_for('book.list', id=book.id) }}"
-          >{{book.title}} </a
+        >
+          <div style="height: 200px" class="mb-2">
+            <img
+              src="../../static/{{book.img}}"
+              height="200px"
+              class="d-inline-block align-text-top"
+            />
+          </div>
+          <div style="height: 50px" class="align-middle">
+            {{book.title}}
+          </div> </a
         ><br />
         {{book.author}}<br />
         {{'★'*book.star+'☆'*(5-book.star)}}<br />
