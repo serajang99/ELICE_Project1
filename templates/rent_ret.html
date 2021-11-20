@@ -13,18 +13,20 @@
         <td class="h6 fw-bold">{{book.title}}</td>
         <td width="200" class="h6">{{book.author}}</td>
         <td width="200">
-          <button
-            type="button"
-            class="
-              btn btn-outline-primary
-              mx-1
-              bg-primary
-              text-white
-              align-middle
-            "
-          >
-            반납하기
-          </button>
+          <a href="{{ url_for('rent.ret', id=book.id) }}">
+            <button
+              type="button"
+              class="
+                btn btn-outline-primary
+                mx-1
+                bg-primary
+                text-white
+                align-middle
+              "
+            >
+              반납하기
+            </button>
+          </a>
         </td>
       </tr>
     </tbody>
