@@ -12,15 +12,12 @@ bp = Blueprint("book", __name__, url_prefix="/book")
 @bp.route('/list/<id>', methods=('GET', 'POST'))
 def list(id):
     book = Book.query.filter(Book.id == id).first()
-    print(book)
 
     if request.method == 'POST':
 
         message, messageType = None, None
         star = int(request.form['rating'])
         comment = request.form['comment']
-
-        # print(session)
 
         if session.get('email') is not None:
             user = User.query.filter(User.email == session['email']).first()
@@ -40,7 +37,6 @@ def list(id):
 
             book_stars = BookReview.query.filter(
                 BookReview.book_id == id).all()
-            # print(book_stars)
 
             cnt = 0
             sum = 0
