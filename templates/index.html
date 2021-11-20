@@ -224,7 +224,12 @@
         searchBox.onkeydown = function (e) {
           if (e.keyCode != 13) return;
           searchQuery = searchBox.value;
-          searchBook();
+          console.log(searchQuery);
+          if (searchQuery != "")
+            searchBook();
+          else{
+            window.location.href = '/';
+          }
         };
 
         function searchBook() {

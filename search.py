@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect
 from flask_restful import Api, Resource
 
 from models import Book
