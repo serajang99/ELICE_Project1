@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash
 from db_connect import db
 from models import Book, User, BookRental
 from datetime import datetime
+from sqlalchemy.sql.expression import false
 
 bp = Blueprint("rent", __name__, url_prefix="/rent")
 
@@ -15,15 +16,12 @@ def list():
     user = User.query.filter(User.email == session['email']).first()
     user_id = user.id
 
-    rented_books = BookRental.query.filter(BookRental.user_id == user_id).all()
-    books_ids = []
-    for book in rented_books:
-        books_ids.append(book.book_id)
-
+    rented_books = BookRental.query.filter(
+        BookRental.user_id == user_id).order_by(BookRental.rental_date.desc()).all()
     books = []
-    for book_id in books_ids:
-        book = Book.query.filter(Book.id == book_id).first()
-        books.append(book)
+    for book in rented_books:
+        book_info = Book.query.filter(Book.id == book.book_id).first()
+        books.append((book_info, book.is_returned))
 
     print(books)
     return render_template('rent_list.html', books=books)
@@ -37,27 +35,32 @@ def ret(id):
 
     if id == '-1':
         rented_books = BookRental.query.filter(
-            BookRental.user_id == user_id).all()
-        books_ids = []
-        for book in rented_books:
-            books_ids.append(book.book_id)
+            (BookRental.user_id == user_id) & (BookRental.is_returned == 0)).all()
 
         books = []
-        for book_id in books_ids:
-            book = Book.query.filter(Book.id == book_id).first()
-            books.append(book)
+        for book in rented_books:
+            book_info = Book.query.filter(Book.id == book.book_id).first()
+            books.append(book_info)
+
         return render_template('rent_ret.html', books=books)
 
     else:
         book = BookRental.query.filter(BookRental.book_id == id).first()
-        db.session.delete(book)
+        book.is_returned = True
         db.session.commit()
 
         book = Book.query.filter(Book.id == id).first()
         book.stock += 1
         db.session.commit()
 
-        return redirect('/rent/list')
+        rented_books = BookRental.query.filter(
+            (BookRental.user_id == user_id) & (BookRental.is_returned == 0)).all()
+
+        books = []
+        for book in rented_books:
+            book_info = Book.query.filter(Book.id == book.book_id).first()
+            books.append(book_info)
+        return render_template('rent_ret.html', books=books)
 
 
 @bp.route('/rent/<id>', methods=('GET', 'POST'))
@@ -74,7 +77,7 @@ def rent(id):
         message, messageType = '책이 존재하지 않습니다.', 'danger'
         flash(message=message, category=messageType)
     else:
-        book_rental = BookRental(datetime.now(), user_id, book_id)
+        book_rental = BookRental(datetime.now(), user_id, book_id, False)
         db.session.add(book_rental)
         db.session.commit()
 

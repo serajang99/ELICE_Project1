@@ -1,4 +1,5 @@
-{% extends 'rent.html' %} {% block rent_list %} {% for book in books %}
+{% extends 'rent.html' %} {% block rent_list %} {% for book, is_returned in
+books %}
 <div class="p-5 bg-light rounded-3 d-flex">
   <img src="../../static/{{book.img}}" height="120px" class="mx-3 my-2" />
   <table style="height: 120px" class="table table-light ml-3">
@@ -6,13 +7,18 @@
       <tr>
         <th scope="col">책 제목</th>
         <th scope="col">저자</th>
+        <th scope="col">상태</th>
       </tr>
     </thead>
     <tbody>
       <tr class="align-middle">
         <td class="h6 fw-bold">{{book.title}}</td>
         <td width="200" class="h6">{{book.author}}</td>
-        <td width="200"></td>
+        {% if is_returned == 0 %}
+        <td width="200">대여 중</td>
+        {% else %}
+        <td width="200">반납 완료</td>
+        {%endif%}
       </tr>
     </tbody>
   </table>
