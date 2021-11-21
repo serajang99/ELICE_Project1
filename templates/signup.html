@@ -44,11 +44,12 @@
         </div>
 
         <div class="container-fluid">
-          {% for message in get_flashed_messages() %}
-          <div class="alert alert-warning text-center" role="alert">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %} {% for category, message in messages %}
+          <div class="alert alert-{{category}} text-center" role="alert">
             {{ message }}
           </div>
-          {% endfor %}
+          {% endfor %} {% endif %} {% endwith %}
           <div class="card text-center">
             <div class="card-body">
               <form method="POST">

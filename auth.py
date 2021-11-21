@@ -24,13 +24,19 @@ def signup():
             '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
         check_name = re.compile(
             '^[가-힣a-zA-Z]+$')
+        check_pw1 = re.compile(
+            '^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[~!@#$%^&*+=-]).{8,100}$')
+
+        check_pw2 = re.compile('^[a-zA-Z\d]{10,100}$')
+        check_pw3 = re.compile('^[a-zA-Z~!@#$%^&*]{10,100}$')
+        check_pw4 = re.compile('^[\d~!@#$%^&*]{10,100}$')
 
         if username is None or check_name.match(username) is None:
             message, messageType = '이름이 유효하지 않습니다.', 'danger'
         elif email is None or check_email.match(email) is None:
             message, messageType = '아이디가 유효하지 않습니다.', 'danger'
-        elif password is None:
-            message, messageType = '비밀번호가 유효하지 않습니다.', 'danger'
+        elif password is None or (check_pw1.match(password) or check_pw2.match(password) or check_pw3.match(password) or check_pw4.match(password)) is None:
+            message, messageType = '비밀번호는 영문/숫자/특수문자(~!@#$%^&*) 3개 조합 8자리 혹은 2개 조합 10자리 이상으로 입력해주세요.', 'danger'
         elif password != password2:
             message, messageType = '비밀번호를 다시 확인해주십시오.', 'danger'
         else:
@@ -42,11 +48,7 @@ def signup():
         if message is None:
             # 유저 테이블에 추가
             user = User(username, email, generate_password_hash(password))
-            # 권한 테이블에 추가
-            # cursor.execute(
-            #    'INSERT INTO permission (username) VALUES (%s)',
-            #    (username, )
-            # )
+
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('auth.signin'))
@@ -71,6 +73,8 @@ def signin():
             message, messageType = '등록되지 않은 계정입니다.', 'danger'
         elif not check_password_hash(user.password, password):
             message, messageType = '비밀번호가 틀렸습니다.', 'danger'
+        elif len(password) < 8:
+            message, messageType = '비밀번호가 8자리 이상이어야 합니다.', 'danger'
 
         if message is None:
             session.clear()
