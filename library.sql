@@ -31,7 +31,8 @@ CREATE TABLE `elice_library`.`bookRental` (
     `rental_date` DATETIME NOT NULL,
     `user_id` INT NOT NULL,
     `book_id` INT NOT NULL,
-    `is_returned` BOOLEAN NOT NULL,
+    `is_returned` INT NOT NULL,
+    `return_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`,`user_id`, `rental_date`),
     FOREIGN KEY (`user_id`) REFERENCES user (`id`),
     FOREIGN KEY (`book_id`) REFERENCES book (`id`)

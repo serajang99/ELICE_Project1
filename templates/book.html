@@ -151,6 +151,7 @@
           </div>
 
           <div class="container-fluid p-5 bg-white my-5">
+            
             <div class="comments-wrap" style="margin-bottom: 10px">
               <div style="margin-bottom: 10px;">댓글 게시판</div>
               {% for review in reviews %}
@@ -163,9 +164,20 @@
               </div>
               {%endfor%}
             <div>
+
+            <div class="container-fluid py-1" style="margin-top: 50px">
+              {% with messages = get_flashed_messages(with_categories=true) %} {%
+              if messages %} {% for category, message in messages %} {% if message != None %}
+              <div class="alert alert-{{category}} text-center " role="alert">
+                {{ message }}
+              </div>
+              {% endif %}
+              {% endfor %} {% endif %} {% endwith %}
+            </div>
+
             <div class="comment-wrap">
               <form method="POST" id="myform">
-                <div style="margin-bottom: 5px; margin-top: 50px">
+                <div style="margin-bottom: 5px;">
                   <fieldset class="align-right">
                     <input
                       type="radio"

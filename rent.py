@@ -1,6 +1,4 @@
 from flask import Blueprint, request, session, flash, redirect, url_for, render_template, g
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
 
 from db_connect import db
 from models import Book, User, BookRental
@@ -19,9 +17,9 @@ def list():
     rented_books = BookRental.query.filter(
         BookRental.user_id == user_id).order_by(BookRental.rental_date.desc()).all()
     books = []
-    for book in rented_books:
-        book_info = Book.query.filter(Book.id == book.book_id).first()
-        books.append((book_info, book.is_returned))
+    for rented_book in rented_books:
+        book_info = Book.query.filter(Book.id == rented_book.book_id).first()
+        books.append((book_info, rented_book))
 
     print(books)
     return render_template('rent_list.html', books=books)
@@ -46,7 +44,8 @@ def ret(id):
 
     else:
         book = BookRental.query.filter(BookRental.book_id == id).first()
-        book.is_returned = True
+        book.is_returned = 1
+        book.return_date = datetime.now()
         db.session.commit()
 
         book = Book.query.filter(Book.id == id).first()
@@ -77,7 +76,8 @@ def rent(id):
         message, messageType = '책이 존재하지 않습니다.', 'danger'
         flash(message=message, category=messageType)
     else:
-        book_rental = BookRental(datetime.now(), user_id, book_id, False)
+        book_rental = BookRental(
+            datetime.now(), user_id, book_id, 0, datetime.now())
         db.session.add(book_rental)
         db.session.commit()
 

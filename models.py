@@ -83,10 +83,12 @@ class BookRental(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-    is_returned = db.Column(db.Boolean, nullable=False, default=False)
+    is_returned = db.Column(db.Integer, nullable=False, default=False)
+    return_date = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, rental_date, user_id, book_id, is_returned):
+    def __init__(self, rental_date, user_id, book_id, is_returned, return_date):
         self.rental_date = rental_date
         self.user_id = user_id
         self.book_id = book_id
         self.is_returned = is_returned
+        self.return_date = return_date
