@@ -105,8 +105,10 @@ class NewBook(db.Model):
     title = db.Column(db.String(100), nullable=False)
     publisher = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, title, publisher, author):
+    def __init__(self, title, publisher, author, user_id):
         self.title = title
         self.publisher = publisher
         self.author = author
+        self.user_id = user_id

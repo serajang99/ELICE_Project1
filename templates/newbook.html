@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: "Nanum Gothic", sans-serif;
+      }
+    </style>
+    <title>Elice Project</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="container-fluid py-4">
+        <nav class="navbar navbar-light border-bottom mb-4">
+          <div class="container-fluid">
+            <a
+              href="/"
+              class="d-flex align-items-center text-dark text-decoration-none"
+            >
+              <img
+                src="/static/img/book_logo.png"
+                height="30"
+                class="d-inline-block align-text-top"
+              />
+              <span style="height: 34px; line-height: 30px" class="ps-2 fs-4"
+                >Elice Library</span
+              >
+            </a>
+            <form class="d-flex">
+              <a href="{{ url_for('auth.signout') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  로그아웃
+                </button>
+              </a>
+            </form>
+          </div>
+        </nav>
+
+        <div class="p-10 mb-3 bg-light rounded-3 text-center">
+          <div class="container-fluid py-5">
+            <h1 class="display-6 fw-bold">책 신청하기</h1>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %} {% for category, message in messages %}
+          <div class="alert alert-{{category}} text-center" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %} {% endif %} {% endwith %}
+          <div class="card text-center">
+            <div class="card-body">
+              <form method="POST">
+                <div class="mb-3 row justify-content-center">
+                  <label for="inputUsername" class="col-sm-2 col-form-label"
+                    >책 제목</label
+                  >
+                  <div class="col-sm-3">
+                    <input
+                      type="title"
+                      class="form-control"
+                      name="title"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-3 row justify-content-center">
+                  <label for="inputEmail" class="col-sm-2 col-form-label"
+                    >저자</label
+                  >
+                  <div class="col-sm-3">
+                    <input
+                      type="author"
+                      class="form-control"
+                      name="author"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-3 row justify-content-center">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >출판사</label
+                  >
+                  <div class="col-sm-3">
+                    <input
+                      type="publisher"
+                      class="form-control"
+                      name="publisher"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    신청하기
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -51,29 +51,40 @@
         </nav>
 
         <div class="p-5 mb-5 bg-light rounded-3">
-          <div class="bg-white rounded-5 ">
-              <form class="d-flex" action="">
-                  <a href="{{ url_for('rent.list')}}">
+            <div class="bg-white rounded-5">
+                <form class="d-flex  align-items-center" action="">
+                    <a href="{{ url_for('rent.list')}}">
                     <button type="button" class="btn btn-outline-primary mx-1">
-                      대여기록
+                        대여기록
                     </button>
-                  </a>
-                  <a href="{{ url_for('rent.ret',id=-1)}}">
+                    </a>
+                    <a href="{{ url_for('rent.ret',id=-1)}}">
                     <button type="button" class="btn btn-outline-primary mx-1">
-                      반납하기
+                        반납하기
                     </button>
-                  </a>
-              </form>
-          </div>
+                    </a>
+                    <a href="{{ url_for('book.new')}}">
+                    <button type="button" class="btn btn-outline-primary mx-1">
+                        책 신청하기
+                    </button>
+                    </a>
+                </form>
+            </div>
 
-          <div class="container-fluid p-5 bg-white my-5">
-            
-            <div class="comments-wrap" style="margin-bottom: 10px">
-              <div style="margin-bottom: 10px;">내 리뷰</div>
-              
-            <div>
+            <div class="container-fluid py-2 my-2">
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %}
+                <div class="alert alert-{{category}} text-center" role="alert">
+                {{ message }}
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
+            </div>
 
-          </div>
+            <div class="container-fluid p-5 bg-white my-5">
+                <div class="comments-wrap" style="margin-bottom: 10px">
+                    <div style="margin-bottom: 10px;">내 리뷰</div>
+                <div>
+            </div>
         </div>
       </div>
     </main>

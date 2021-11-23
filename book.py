@@ -2,7 +2,7 @@ from flask import Blueprint, request, session, flash, redirect, url_for, render_
 
 from db_connect import db
 from datetime import datetime
-from models import User, Book, BookReview, BookRental
+from models import User, Book, BookReview, BookRental, NewBook
 
 bp = Blueprint("book", __name__, url_prefix="/book")
 
@@ -67,3 +67,26 @@ def list(id):
         BookReview.comment_date.desc()).all()
 
     return render_template('book.html', book=book, reviews=reviews)
+
+
+@bp.route('/new', methods=('GET', 'POST'))
+def new():
+    if request.method == 'GET':
+        return render_template('newbook.html')
+
+    elif request.method == 'POST':
+        title = request.form.get('title', None)
+        author = request.form.get('author', None)
+        publisher = request.form.get('publisher', None)
+        user = User.query.filter(User.email == session['email']).first()
+        user_id = user.id
+
+        # 뉴북 테이블에 추가
+        book = NewBook(title, author, publisher, user_id)
+        db.session.add(book)
+        db.session.commit()
+        message = '성공적으로 저장되었습니다.'
+        messageType = 'success'
+        flash(message=message, category=messageType)
+
+    return render_template('mypage.html')
