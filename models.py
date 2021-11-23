@@ -44,11 +44,13 @@ class User(db.Model):
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.TEXT, nullable=False)
+    admin = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, admin):
         self.username = username
         self.email = email
         self.password = password
+        self.admin = admin
 
     def __str__(self):
         return f'{self.email}\n'
@@ -92,3 +94,19 @@ class BookRental(db.Model):
         self.book_id = book_id
         self.is_returned = is_returned
         self.return_date = return_date
+
+
+class NewBook(db.Model):
+
+    __tablename__ = 'NewBook'
+
+    id = db.Column(db.Integer, nullable=False,
+                   primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
+    publisher = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
+
+    def __init__(self, title, publisher, author):
+        self.title = title
+        self.publisher = publisher
+        self.author = author

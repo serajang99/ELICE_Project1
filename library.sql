@@ -50,3 +50,12 @@ CREATE TABLE `elice_library`.`bookReview` (
     FOREIGN KEY (`user_id`) REFERENCES user (`id`),
     FOREIGN KEY (`book_id`) REFERENCES book (`id`)
 );
+
+-- 신청한 도서 테이블
+CREATE TABLE `elice_library`.`newBook` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(100) NOT NULL,
+    `publisher` VARCHAR(100) NOT NULL,
+    `author` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`)
+);
