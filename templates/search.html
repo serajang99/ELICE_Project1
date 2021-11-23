@@ -27,7 +27,8 @@
           </div> </a
         ><br />
         {{book.author}}<br />
-        {{'★'*book.star+'☆'*(5-book.star)}}<br />
+        <span id="full-star">{{'⭐'*book.star}}</span>
+        <span id="empty-star">{{'⭐'*(5-book.star)}}</span><br />
         {{book.stock}}권<br />
         {% if g.email %}
         <a href="{{ url_for('rent.rent', id=book.id) }}">

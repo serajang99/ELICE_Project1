@@ -15,6 +15,28 @@
       src="/static/js/jquery-3.6.0.min.js"
     ></script>
 
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <style>
+      * {
+        font-family: 'Nanum Gothic', sans-serif;
+        
+      }
+      #empty-star {
+        font-size: 1em; /* 이모지 크기 */
+        color: transparent; /* 기존 이모지 컬러 제거 */
+        text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+        margin: -6px;
+        display: inline-block;
+      }
+      #full-star {
+        color: transparent; /* 기존 이모지 컬러 제거 */
+        text-shadow: 0 0 0 #ffea2a;
+      }
+    </style>
     <title>Elice Project</title>
   </head>
 
@@ -34,7 +56,7 @@
               />
               <span style="height:34px; line-height:30px" class="ps-2 fs-4">Elice Library</span>
             </a>
-            <form class="d-flex">
+            <form class="d-flex align-items-end" style="margin-top: 5px;">
               {% if g.email %}
               <a href="{{ url_for('rent.list')}}">
                 <button type="button" class="btn btn-outline-primary mx-1">
@@ -154,7 +176,8 @@
                     <div style="height: 50px">{{book.title}}</div> </a
                   ><br />
                   {{book.author}}<br />
-                  {{'★'*book.star+'☆'*(5-book.star)}}<br />
+                  <span id="full-star">{{'⭐'*book.star}}</span>
+                  <span id="empty-star">{{'⭐'*(5-book.star)}}</span><br />
                   {{book.stock}}권<br />
                   {% if g.email %}
                   <a href="{{ url_for('rent.rent', id=book.id) }}">
