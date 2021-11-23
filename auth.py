@@ -47,7 +47,7 @@ def signup():
 
         if message is None:
             # 유저 테이블에 추가
-            user = User(username, email, generate_password_hash(password))
+            user = User(username, email, generate_password_hash(password), 0)
 
             db.session.add(user)
             db.session.commit()
@@ -79,6 +79,7 @@ def signin():
         if message is None:
             session.clear()
             session['email'] = user.email
+            session['admin'] = user.admin
             return redirect(url_for('index'))
 
         flash(message=message, category=messageType)
@@ -89,10 +90,22 @@ def signin():
 @bp.before_app_request
 def load_logged_in_user():
     email = session.get('email')
+    admin = session.get('admin')
     g.email = None if email is None else email
+    g.admin = None if admin is None else admin
 
 
 @bp.route('/signout')
 def signout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@bp.route('/mypage', methods=('GET', 'POST'))
+def mypage():
+    return render_template('mypage.html')
+
+
+@bp.route('/adminpage', methods=('GET', 'POST'))
+def adminpage():
+    return render_template('adminpage.html')

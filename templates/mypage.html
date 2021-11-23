@@ -37,11 +37,10 @@
                 height="30"
                 class="d-inline-block align-text-top"
               />
-              <span style="height: 34px; line-height: 30px" class="ps-2 fs-4"
-                >Elice Library</span
-              >
+              <span style="height:34px; line-height:30px" class="ps-2 fs-4">Elice Library</span>
             </a>
             <form class="d-flex">
+
               <a href="{{ url_for('auth.signout') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   로그아웃
@@ -50,10 +49,30 @@
             </form>
           </div>
         </nav>
-        <div class="container-fluid">
-          <div class="p-3 mb-5 rounded-3">
-            {% block rent_ret %} {% endblock %} {% block rent_list %} {%
-            endblock %}
+
+        <div class="p-5 mb-5 bg-light rounded-3">
+          <div class="bg-white rounded-5 ">
+              <form class="d-flex" action="">
+                  <a href="{{ url_for('rent.list')}}">
+                    <button type="button" class="btn btn-outline-primary mx-1">
+                      대여기록
+                    </button>
+                  </a>
+                  <a href="{{ url_for('rent.ret',id=-1)}}">
+                    <button type="button" class="btn btn-outline-primary mx-1">
+                      반납하기
+                    </button>
+                  </a>
+              </form>
+          </div>
+
+          <div class="container-fluid p-5 bg-white my-5">
+            
+            <div class="comments-wrap" style="margin-bottom: 10px">
+              <div style="margin-bottom: 10px;">내 리뷰</div>
+              
+            <div>
+
           </div>
         </div>
       </div>

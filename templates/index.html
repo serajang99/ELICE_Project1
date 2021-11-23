@@ -69,15 +69,21 @@
             </div>
 
             <form class="d-flex align-items-end" style="margin-top: 5px; margin-bottom: 5px;">
-              {% if g.email %}
-              <a href="{{ url_for('rent.list')}}">
+              {% if g.email and g.admin == 0 %}
+              <a href="{{ url_for('auth.mypage') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
-                  대여기록
+                  마이페이지
                 </button>
               </a>
-              <a href="{{ url_for('rent.ret',id=-1)}}">
+              <a href="{{ url_for('auth.signout') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
-                  반납하기
+                  로그아웃
+                </button>
+              </a>
+              {% elif g.email and g.admin == 1 %}
+              <a href="{{ url_for('auth.adminpage') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  관리자 페이지
                 </button>
               </a>
               <a href="{{ url_for('auth.signout') }}">
