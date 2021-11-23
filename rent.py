@@ -39,11 +39,11 @@ def ret(id):
         for book in rented_books:
             book_info = Book.query.filter(Book.id == book.book_id).first()
             books.append(book_info)
-
         return render_template('rent_ret.html', books=books)
 
     else:
-        book = BookRental.query.filter(BookRental.book_id == id).first()
+        book = BookRental.query.filter((BookRental.book_id == id) & (
+            BookRental.user_id == user_id) & (BookRental.is_returned == 0)).first()
         book.is_returned = 1
         book.return_date = datetime.now()
         db.session.commit()
