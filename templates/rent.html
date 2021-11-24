@@ -44,6 +44,11 @@
               >
             </a>
             <form class="d-flex">
+              <a href="{{ url_for('auth.mypage') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  마이페이지
+                </button>
+              </a>
               <a href="{{ url_for('auth.signout') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   로그아웃

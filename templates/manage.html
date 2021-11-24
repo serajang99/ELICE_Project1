@@ -44,6 +44,11 @@
               >
             </a>
             <form class="d-flex">
+              <a href="{{ url_for('auth.adminpage') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  관리자페이지
+                </button>
+              </a>
               <a href="{{ url_for('auth.signout') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   로그아웃
