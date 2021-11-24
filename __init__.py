@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g, session
 from db_connect import db
 from models import Book
 from . import update_data
@@ -39,3 +39,9 @@ def index():
     bookList = bookList.paginate(page, per_page=8)
 
     return render_template('index_list.html', books=bookList, libraries=libraries)
+
+
+@app.route('/popup')
+def popup():
+    session['cnt'] = 1
+    return render_template('popup.html')

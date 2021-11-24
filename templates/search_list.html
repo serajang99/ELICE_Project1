@@ -1,5 +1,5 @@
 {%block search_list%}
-<div class="container-fluid text-center my-3">
+<div class="container-fluid items-align-left my-3">
   <div id="resultBody" class="row my-auto mx-auto" style="height: auto">
     {% for book in books.items %} {% if g.email %}
     <div
@@ -45,8 +45,9 @@
       {%endfor%}
     </div>
   </div>
+
   <!-- 페이징처리 시작 -->
-  <ul class="pagination justify-content-center">
+  <ul class="pagination justify-content-center m-3">
     <!-- 이전페이지 -->
     {% if books.has_prev %}
     <li class="page-item">

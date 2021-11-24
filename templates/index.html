@@ -214,6 +214,7 @@
             </div>
           </div>
         </footer>
+        <div id="cnt">{{session['cnt']}}</div>
       </div>
       <script>
         var searchBox = document.getElementById("searchBox");
@@ -258,6 +259,17 @@
         function onClickSelectBox() {
           window.location.href = selectBox.value;
         }
+        
+        var cnt = document.getElementById("cnt").innerText;
+        window.onload = function () {
+          console.log(cnt)
+            if ( cnt == '' ) {
+            window.open(
+              "popup",
+              "popup01",
+              "width=300, height=400, scrollbars= 0, toolbar=0, menubar=no"
+            );}
+        };
       </script>
     </main>
   </body>
