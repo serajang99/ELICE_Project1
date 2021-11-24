@@ -1,0 +1,21 @@
+{% extends 'manage.html' %} {% block book %} {% for book in books %}
+<div class="p-2 bg-light rounded-3 d-flex">
+  <img src="../../static/{{book.img}}" width="100px" class="mx-3 my-2" />
+  <table style="height: 100px" class="table table-light ml-3">
+    <thead>
+      <tr>
+        <th scope="col">책 제목</th>
+        <th scope="col">저자</th>
+        <th scope="col">출판사</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="align-middle">
+        <td class="h6 fw-bold">{{book.title}}</td>
+        <td width="150" class="h6">{{book.author}}</td>
+        <td width="200" class="h6">{{book.publisher}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{%endfor%} {% endblock %}

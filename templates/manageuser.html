@@ -1,0 +1,20 @@
+{% extends 'manage.html' %} {% block user %} {% for user in users %}
+<div class="p-5 bg-light rounded-3 d-flex">
+  <table style="height: 120px" class="table table-light ml-3">
+    <thead>
+      <tr>
+        <th scope="col">이름</th>
+        <th scope="col">email</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="align-middle">
+        <td width="100" class="h6 fw-bold">{{user.username}}</td>
+        <td width="150" class="h6">{{user.email}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{%endfor%} {% endblock %}
