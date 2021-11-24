@@ -17,15 +17,18 @@ class Search(Resource):
         else:
             if type == 'title':
                 search_books = Book.query.filter(
-                    Book.title.like(f"%{q}%")).order_by(Book.id).all()
+                    Book.title.like(f"%{q}%")).order_by(Book.id)
             elif type == 'author':
                 search_books = Book.query.filter(
-                    Book.author.like(f"%{q}%")).order_by(Book.id).all()
+                    Book.author.like(f"%{q}%")).order_by(Book.id)
             elif type == 'publisher':
                 search_books = Book.query.filter(
-                    Book.publisher.like(f"%{q}%")).order_by(Book.id).all()
+                    Book.publisher.like(f"%{q}%")).order_by(Book.id)
 
-            return jsonify(render_template('search.html', books=search_books))
+            page = request.args.get('page', type=int, default=1)  # 페이지
+            search_books = search_books.paginate(page, per_page=8)
+
+            return render_template('search_list.html', books=search_books, q=q, type=type)
 
 
 api.add_resource(Search, '/books')

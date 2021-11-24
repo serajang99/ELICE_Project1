@@ -9,7 +9,7 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/static/css/footer.css" rel="stylesheet" />
     <link href="/static/css/star.css" rel="stylesheet" />
-    <link href="/static/img/favicon/favicon-16x16.png" rel="shortcut icon" >
+    <link href="/static/img/favicon/favicon-16x16.png" rel="shortcut icon" />
 
     <!-- Bootstrap JS -->
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
@@ -19,16 +19,17 @@
     ></script>
 
     <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       * {
-        font-family: 'Nanum Gothic', sans-serif;
-        
+        font-family: "Nanum Gothic", sans-serif;
       }
-
     </style>
     <title>Elice Project</title>
   </head>
@@ -47,20 +48,42 @@
                 height="30"
                 class="d-inline-block align-text-top"
               />
-              <span style="height:34px; line-height:30px" class="ps-2 fs-4">Elice Library</span>
+              <span style="height: 34px; line-height: 30px" class="ps-2 fs-4"
+                >Elice Library</span
+              >
             </a>
 
             <!-- 검색 -->
-            <div class="d-flex align-items-end" style="width: 36%; height: 100%; margin-top: 5px;margin-bottom: 5px;">
-              <select name="libraries" id="selectBox" class="form-select me-1" >
+            <div
+              class="d-flex align-items-end"
+              style="
+                width: 36%;
+                height: 100%;
+                margin-top: 5px;
+                margin-bottom: 5px;
+              "
+            >
+              <select name="libraries" id="selectBox" class="form-select me-1">
                 {%for library in libraries %}
-                <option value="{{library['homepageUrl']}}">{{library['lbrryNm']}}</option>
+                <option value="{{library['homepageUrl']}}">
+                  {{library['lbrryNm']}}
+                </option>
                 {%endfor%}
               </select>
-              <button type="button" class="btn btn-outline-secondary mx-1" style="width: 70px" onclick=onClickSelectBox()>이동</button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary mx-1"
+                style="width: 70px"
+                onclick="onClickSelectBox()"
+              >
+                이동
+              </button>
             </div>
 
-            <form class="d-flex align-items-end" style="margin-top: 5px; margin-bottom: 5px;">
+            <form
+              class="d-flex align-items-end"
+              style="margin-top: 5px; margin-bottom: 5px"
+            >
               {% if g.email and g.admin == 0 %}
               <a href="{{ url_for('auth.mypage') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
@@ -98,8 +121,6 @@
             </form>
           </div>
         </nav>
-
-
 
         <div class="p-10 mb-3 bg-light rounded-3 text-center">
           <div class="container-fluid py-5">
@@ -139,115 +160,7 @@
             {% endfor %} {% endif %} {% endwith %}
           </div>
 
-          <div id="search-result">
-            <div class="container-fluid text-center my-3">
-              <div
-                id="resultBody"
-                class="row my-auto mx-auto"
-                style="height: auto"
-              >
-                {% for book in books.items %}
-                {% if g.email %}
-                <div
-                  class="
-                    col-sm-3
-                    bg-light
-                    rounded-3
-                    ms-auto
-                    mb-2
-                    p-2
-                    align-self-center
-                  "
-                  style="height: 410px"
-                >
-                {% else %}
-                <div
-                  class="
-                    col-sm-3
-                    bg-light
-                    rounded-3
-                    ms-auto
-                    mb-2
-                    p-2
-                    align-self-center
-                  "
-                  style="height: 370px"
-                >
-                {% endif %}
-                  <a
-                    class="btn btn-default"
-                    href="{{ url_for('book.list', id=book.id) }}"
-                    >
-                    <div style="height: 200px" class="mb-2">
-                      <img
-                        src="../../static/{{book.img}}"
-                        height="200px"
-                        class="d-inline-block align-text-top"
-                      />
-                    </div>
-                    <div style="height: 50px">{{book.title}}</div> </a
-                  ><br />
-                  {{book.author}}<br />
-                  <span id="full-star">{{'⭐'*book.star}}</span>
-                  <span id="empty-star">{{'⭐'*(5-book.star)}}</span><br />
-                  {{book.stock}}권<br />
-                  {% if g.email %}
-                  <a href="{{ url_for('rent.rent', id=book.id) }}">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary my-2 bg-primary text-white"
-                    >
-                      대여하기
-                    </button>
-                  </a>
-                  {% endif %}
-                </div>
-                {%endfor%}
-              </div>
-            </div>
-            <!-- 페이징처리 시작 -->
-            <ul class="pagination justify-content-center">
-              <!-- 이전페이지 -->
-              {% if books.has_prev %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ books.prev_num }}"><</a>
-              </li>
-              {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#"
-                  ><</a
-                >
-              </li>
-              {% endif %} {% for page_num in books.iter_pages() %} {% if
-              page_num %} {% if page_num != books.page %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_num }}"
-                  >{{ page_num }}</a
-                >
-              </li>
-              {% else %}
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">{{ page_num }}</a>
-              </li>
-              {% endif %} {% else %}
-              <li class="disabled">
-                <a class="page-link" href="#">...</a>
-              </li>
-              {% endif %} {% endfor %}
-              <!-- 다음페이지 -->
-              {% if books.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ books.next_num }}">></a>
-              </li>
-              {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#"
-                  >></a
-                >
-              </li>
-              {% endif %}
-            </ul>
-          </div>
+          <div id="search-result">{%block index_list%}{%endblock%}</div>
         </div>
 
         <!-- Site footer -->
@@ -256,34 +169,42 @@
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <h6>About</h6>
-                <p class="text-justify">elice 1차 개인 프로젝트 장서우 도서관 만들기입니다.</p>
+                <p class="text-justify">
+                  elice 1차 개인 프로젝트 장서우 도서관 만들기입니다.
+                </p>
               </div>
-        
+
               <div class="col-xs-6 col-md-3">
                 <h6></h6>
                 <ul class="footer-links">
                   <li></li>
                 </ul>
               </div>
-        
+
               <div class="col-xs-6 col-md-3">
                 <h6>Quick Links</h6>
                 <ul class="footer-links">
                   <li><a href="https://elice.io/home">About Elice</a></li>
-                  <li><a href="https://github.com/serajang99">Contact Me</a></li>
-                  <li><a href="https://kdt-gitlab.elice.io/003-part2-project-library/team1/3-library-sw">About Project</a></li>
+                  <li>
+                    <a href="https://github.com/serajang99">Contact Me</a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://kdt-gitlab.elice.io/003-part2-project-library/team1/3-library-sw"
+                      >About Project</a
+                    >
+                  </li>
                 </ul>
               </div>
             </div>
-            <hr>
+            <hr />
           </div>
           <div class="container">
             <div class="row">
               <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">
-                </p>
+                <p class="copyright-text"></p>
               </div>
-        
+
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <ul class="social-icons">
                   <li><a class="facebook" href="#">맨위로</a></li>
@@ -303,17 +224,22 @@
           if (e.keyCode != 13) return;
           searchQuery = searchBox.value;
           console.log(searchQuery);
-          if (searchQuery != "")
-            searchBook();
-          else{
-            window.location.href = '/';
+          if (searchQuery != "") searchBook(1);
+          else {
+            window.location.href = "/";
           }
         };
 
-        function searchBook() {
+        function searchBook(page) {
           $.ajax({
             type: "GET",
-            url: "/search/books?q=" + searchQuery + "&type=" + searchType.value, 
+            url:
+              "/search/books?q=" +
+              searchQuery +
+              "&type=" +
+              searchType.value +
+              "&page=" +
+              page,
             dataType: "json",
             success: function (res) {
               console.log(res);
@@ -326,7 +252,7 @@
             },
           });
         }
-        
+
         var selectBox = document.getElementById("selectBox");
         function onClickSelectBox() {
           window.location.href = selectBox.value;

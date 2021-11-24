@@ -1,0 +1,83 @@
+{% extends 'index.html' %} {%block index_list%}
+<div class="container-fluid text-center my-3">
+  <div id="resultBody" class="row my-auto mx-auto" style="height: auto">
+    {% for book in books.items %} {% if g.email %}
+    <div
+      class="col-sm-3 bg-light rounded-3 ms-auto mb-2 p-2 align-self-center"
+      style="height: 410px"
+    >
+      {% else %}
+      <div
+        class="col-sm-3 bg-light rounded-3 ms-auto mb-2 p-2 align-self-center"
+        style="height: 370px"
+      >
+        {% endif %}
+        <a
+          class="btn btn-default"
+          href="{{ url_for('book.list', id=book.id) }}"
+        >
+          <div style="height: 200px" class="mb-2">
+            <img
+              src="../../static/{{book.img}}"
+              height="200px"
+              class="d-inline-block align-text-top"
+            />
+          </div>
+          <div style="height: 50px">{{book.title}}</div> </a
+        ><br />
+        {{book.author}}<br />
+        <span id="full-star">{{'⭐'*book.star}}</span>
+        <span id="empty-star">{{'⭐'*(5-book.star)}}</span><br />
+        {{book.stock}}권<br />
+        {% if g.email %}
+        <a href="{{ url_for('rent.rent', id=book.id) }}">
+          <button
+            type="button"
+            class="btn btn-outline-primary my-2 bg-primary text-white"
+          >
+            대여하기
+          </button>
+        </a>
+        {% endif %}
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+  <!-- 페이징처리 시작 -->
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if books.has_prev %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ books.prev_num }}"><</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><</a>
+    </li>
+    {% endif %} {% for page_num in books.iter_pages() %} {% if page_num %} {% if
+    page_num != books.page %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+    </li>
+    {% else %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="#">{{ page_num }}</a>
+    </li>
+    {% endif %} {% else %}
+    <li class="disabled">
+      <a class="page-link" href="#">...</a>
+    </li>
+    {% endif %} {% endfor %}
+    <!-- 다음페이지 -->
+    {% if books.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ books.next_num }}">></a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">></a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{%endblock%}

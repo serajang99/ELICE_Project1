@@ -38,4 +38,4 @@ def index():
     bookList = Book.query.order_by(Book.id.asc())
     bookList = bookList.paginate(page, per_page=8)
 
-    return render_template('index.html', books=bookList, libraries=libraries)
+    return render_template('index_list.html', books=bookList, libraries=libraries)
