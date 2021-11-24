@@ -7,6 +7,7 @@ from . import auth
 from . import book
 from . import search
 from . import rent
+from . import manage
 
 app = Flask(__name__)
 
@@ -21,6 +22,7 @@ app.register_blueprint(auth.bp)
 app.register_blueprint(book.bp)
 app.register_blueprint(rent.bp)
 app.register_blueprint(search.bp)
+app.register_blueprint(manage.bp)
 
 db.init_app(app)
 

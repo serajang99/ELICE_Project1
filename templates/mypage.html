@@ -103,6 +103,17 @@
                   </div>
                   {%endfor%}
                 </div>
+
+                <div class="comments-wrap" style="margin-bottom: 10px;"></div>
+                  <div style="margin-bottom: 10px;">내가 신청한 책</div>
+                  {%for newbook in newbooks%}
+                  <div class="p-2 bg-light rounded-3" style="margin-bottom: 10px; width: 80%;">
+                      <div class="book-info">책 제목: {{newbook.title}} <br/>
+                      저자: {{newbook.author}} <br/>
+                      출판사: {{newbook.publisher}}</div>
+                  </div>
+                  {%endfor%}
+                </div>
               </div>
             </div>
           </div>
