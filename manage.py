@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 import re
+from datetime import datetime
 
 from models import User, BookReview, Book
 from db_connect import db
@@ -62,9 +63,35 @@ def user():
 
 @bp.route('/book', methods=('GET', 'POST'))
 def book():
-    books = Book.query.all()
-    if request.method == 'GET':
-        return render_template('managebook.html', books=books)
-    elif request.method == 'POST':
 
-        return render_template('managebook.html', books=books)
+    if request.method == 'POST':
+
+        title = request.form.get('title')
+        publisher = request.form.get('publisher')
+        author = request.form.get('author')
+        publication_date = request.form.get('publication_date')
+        pages = request.form.get('pages')
+        isbn = request.form.get('isbn')
+        description = request.form.get('description')
+        link = request.form.get('link')
+        img_value = 0
+        img = f'img/book_img/{img_value}.jpg'
+        data = {
+            'title': title,
+            'publisher': publisher,
+            'author': author,
+            'publication_date': publication_date,
+            'pages': pages,
+            'isbn': isbn,
+            'description': description,
+            'link': link,
+            'img': img,
+            'register_time': datetime.now()
+        }
+        book = Book(data)
+
+        db.session.add(book)
+        db.session.commit()
+
+    books = Book.query.order_by(Book.id.desc()).all()
+    return render_template('managebook.html', books=books)

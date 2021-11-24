@@ -18,6 +18,7 @@ class Book(db.Model):
     img = db.Column(db.String(100), nullable=False)
     stock = db.Column(db.Integer, nullable=False, default=5)
     star = db.Column(db.Integer, nullable=False, default=0)
+    register_time = db.Column(db.DateTime, nullable=False, default=0)
 
     def __init__(self, data):
         if type(data) is dict:
@@ -30,6 +31,7 @@ class Book(db.Model):
             self.description = data['description']
             self.link = data['link']
             self.img = data['img']
+            self.register_time = data['register_time']
 
     def __str__(self):
         return f'{self.title}\n{self.author}\n'

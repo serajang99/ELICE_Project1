@@ -1,6 +1,83 @@
-{% extends 'manage.html' %} {% block book %} {% for book in books %}
+{% extends 'manage.html' %} {% block book %}
+<div style="margin-bottom: 10px">새 책 등록</div>
+<div class="p-2 bg-light rounded-3">
+  <form method="POST" width="100%">
+    <div class="mb-3 row justify-content-center">
+      <label for="inputTitle" class="col-sm-2 col-form-label">책 제목</label>
+      <div class="col-sm-3">
+        <input type="title" class="form-control" name="title" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="inputAuthor" class="col-sm-2 col-form-label">저자</label>
+      <div class="col-sm-3">
+        <input type="author" class="form-control" name="author" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="inputPublisher" class="col-sm-2 col-form-label">출판사</label>
+      <div class="col-sm-3">
+        <input
+          type="publisher"
+          class="form-control"
+          name="publisher"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="input" class="col-sm-2 col-form-label">출판 날짜</label>
+      <div class="col-sm-3">
+        <input
+          type="publication_date"
+          class="form-control"
+          name="publication_date"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="inputr" class="col-sm-2 col-form-label">페이지 수</label>
+      <div class="col-sm-3">
+        <input type="pages" class="form-control" name="pages" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="input" class="col-sm-2 col-form-label">ISBN</label>
+      <div class="col-sm-3">
+        <input type="isbn" class="form-control" name="isbn" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="input" class="col-sm-2 col-form-label">책 설명</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" name="description" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <label for="input" class="col-sm-2 col-form-label">책 링크</label>
+      <div class="col-sm-3">
+        <input type="link" class="form-control" name="link" required />
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center">
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-lg">등록</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div style="margin-bottom: 10px">책 목록</div>
 <div class="p-2 bg-light rounded-3 d-flex">
-  <img src="../../static/{{book.img}}" width="100px" class="mx-3 my-2" />
   <table style="height: 100px" class="table table-light ml-3">
     <thead>
       <tr>
@@ -10,12 +87,14 @@
       </tr>
     </thead>
     <tbody>
+      {% for book in books %}
       <tr class="align-middle">
         <td class="h6 fw-bold">{{book.title}}</td>
-        <td width="150" class="h6">{{book.author}}</td>
+        <td width="200" class="h6">{{book.author}}</td>
         <td width="200" class="h6">{{book.publisher}}</td>
       </tr>
+      {%endfor%}
     </tbody>
   </table>
 </div>
-{%endfor%} {% endblock %}
+{% endblock %}
