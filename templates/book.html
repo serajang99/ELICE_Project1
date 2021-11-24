@@ -139,7 +139,8 @@
                 <div class="p-1" style="margin-left:auto">익명{{review.user_id}}</div>
                 <div class="d-flex p-2">
                   <div style="width: 80%; margin-left:auto; margin-right:10px;">{{review.comment}}</div>
-                  <div style="width: 10%; margin-right:auto;">{{'★'*review.star+'☆'*(5-review.star)}}</div>
+                  <span id="full-star">{{'⭐'*review.star}}</span>
+                  <span id="empty-star">{{'⭐'*(5-review.star)}}</span><br />
                 </div>
               </div>
               {%endfor%}

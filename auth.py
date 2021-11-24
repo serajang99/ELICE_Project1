@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 
 import re
 
-from models import User
+from models import User, BookReview, Book
 from db_connect import db
 
 bp = Blueprint("auth", __name__, url_prefix="/user")
@@ -103,7 +103,14 @@ def signout():
 
 @bp.route('/mypage', methods=('GET', 'POST'))
 def mypage():
-    return render_template('mypage.html')
+    user = User.query.filter(User.email == session['email']).first()
+    user_id = user.id
+    bookreviews = BookReview.query.filter(BookReview.user_id == user_id).all()
+    reviews = []
+    for bookreview in bookreviews:
+        book = Book.query.filter(Book.id == bookreview.book_id).first()
+        reviews.append((bookreview, book))
+    return render_template('mypage.html', reviews=reviews)
 
 
 @bp.route('/adminpage', methods=('GET', 'POST'))
