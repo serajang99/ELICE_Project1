@@ -12,12 +12,8 @@ bp = Blueprint("manage", __name__, url_prefix="/manage")
 
 @bp.route('/user', methods=('GET', 'POST'))
 def user():
-    users = User.query.filter(User.admin == 0).all()
-    admins = User.query.filter(User.admin == 1).all()
 
-    if request.method == 'GET':
-        return render_template('manageuser.html', users=users, admins=admins)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         username = request.form.get('username', None)
         email = request.form.get('email', None)
         password = request.form.get('password', None)
@@ -59,6 +55,8 @@ def user():
 
         flash(message=message, category=messageType)
 
+    users = User.query.filter(User.admin == 0).all()
+    admins = User.query.filter(User.admin == 1).all()
     return render_template('manageuser.html', users=users, admins=admins)
 
 

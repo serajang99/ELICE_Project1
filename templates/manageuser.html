@@ -51,8 +51,8 @@
   {% endif %} {% endfor %} {% endif %} {% endwith %}
 </div>
 
-{% for admin in admins %}
 <div style="margin-bottom: 10px">관리자</div>
+
 <div class="p-2 bg-light rounded-3 d-flex">
   <table style="height: 80px" class="table table-light ml-3">
     <thead>
@@ -63,16 +63,19 @@
       </tr>
     </thead>
     <tbody>
+      {% for admin in admins %}
       <tr class="align-middle">
         <td width="100" class="h6 fw-bold">{{admin.username}}</td>
         <td width="150" class="h6">{{admin.email}}</td>
         <td></td>
       </tr>
+      {%endfor%}
     </tbody>
   </table>
 </div>
-{%endfor%} {% for user in users %}
+
 <div style="margin-bottom: 10px">사용자</div>
+
 <div class="p-2 bg-light rounded-3 d-flex">
   <table style="height: 80px" class="table table-light ml-3">
     <thead>
@@ -83,12 +86,14 @@
       </tr>
     </thead>
     <tbody>
+      {% for user in users %}
       <tr class="align-middle">
         <td width="100" class="h6 fw-bold">{{user.username}}</td>
         <td width="150" class="h6">{{user.email}}</td>
         <td></td>
       </tr>
+      {%endfor%}
     </tbody>
   </table>
 </div>
-{%endfor%} {% endblock %}
+{% endblock %}
