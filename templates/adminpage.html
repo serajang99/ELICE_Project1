@@ -62,7 +62,7 @@
                 </div>
                 <ul class="sideMenu">
                     <li><a href="{{ url_for('manage.user')}}">
-                        user 관리
+                        user/admin 관리
                     </a></li>
                     <li>
                     <a href="{{ url_for('manage.book')}}">
@@ -74,12 +74,13 @@
             <div class="mainArea">
               <!-- CONTAINER  -->
               <div class="mainContent">
-                <div class="container-fluid py-2 my-2">
-                  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                  messages %} {% for category, message in messages %}
-                  <div class="alert alert-{{category}} text-center" role="alert">
+                <div class="container-fluid py-1" style="margin-top: 50px">
+                  {% with messages = get_flashed_messages(with_categories=true) %} {%
+                  if messages %} {% for category, message in messages %} {% if message != None %}
+                  <div class="alert alert-{{category}} text-center " role="alert">
                     {{ message }}
                   </div>
+                  {% endif %}
                   {% endfor %} {% endif %} {% endwith %}
                 </div>
                 

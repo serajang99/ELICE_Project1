@@ -60,12 +60,15 @@
         </div>
 
         <div class="container-fluid">
-          {% with messages = get_flashed_messages(with_categories=true) %} {% if
-          messages %} {% for category, message in messages %}
-          <div class="alert alert-{{category}} text-center" role="alert">
-            {{ message }}
+          <div class="container-fluid py-1" style="margin-top: 50px">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %} {% if message
+            != None %}
+            <div class="alert alert-{{category}} text-center " role="alert">
+              {{ message }}
+            </div>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
           </div>
-          {% endfor %} {% endif %} {% endwith %}
           <div class="card text-center">
             <div class="card-body">
               <form method="POST">

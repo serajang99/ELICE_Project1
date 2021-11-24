@@ -76,16 +76,17 @@
             <div class="mainArea">
               <!-- CONTAINER  -->
               <div class="mainContent">
-                <div class="py-2 my-2" style="margin-bottom: 10px">
+                <div class="container-fluid py-1" style="margin-top: 50px">
                   {% with messages = get_flashed_messages(with_categories=true)
                   %} {% if messages %} {% for category, message in messages %}
+                  {% if message != None %}
                   <div
-                    class="alert alert-{{category}} text-center"
+                    class="alert alert-{{category}} text-center "
                     role="alert"
                   >
                     {{ message }}
                   </div>
-                  {% endfor %} {% endif %} {% endwith %}
+                  {% endif %} {% endfor %} {% endif %} {% endwith %}
                 </div>
 
                 <div class="py-2 my-2" style="margin-bottom: 10px">
