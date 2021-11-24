@@ -9,7 +9,7 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/static/css/mypage.css" rel="stylesheet" />
     <link href="/static/css/star.css" rel="stylesheet" />
-    <link href="/static/img/favicon/favicon-16x16.png" rel="shortcut icon" >
+    <link href="/static/img/favicon/favicon-16x16.png" rel="shortcut icon" />
 
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,7 +41,9 @@
                 height="30"
                 class="d-inline-block align-text-top"
               />
-              <span style="height:34px; line-height:30px" class="ps-2 fs-4">Elice Library</span>
+              <span style="height: 34px; line-height: 30px" class="ps-2 fs-4"
+                >Elice Library</span
+              >
             </a>
             <form class="d-flex">
               <a href="{{ url_for('auth.signout') }}">
@@ -57,59 +59,67 @@
           <div class="container">
             <!--     SIDE AREA -->
             <div class="sideArea">
-                <div class="avatar">
-                    <div class="avatarName">Welcome,<br>{{g.email}}</div>
-                </div>
-                <ul class="sideMenu">
-                    <li><a href="{{ url_for('rent.list')}}">
-                        대여기록
-                    </a></li>
-                    <li>
-                    <a href="{{ url_for('rent.ret',id=-1)}}">
-                        반납하기
-                    </a></li>
-                    <li>
-                    <a href="{{ url_for('book.new')}}">
-                        책 신청하기
-                    </a>
-                    </li>
-                </ul>
+              <div class="avatar">
+                <div class="avatarName">Welcome,<br />{{g.email}}</div>
+              </div>
+              <ul class="sideMenu">
+                <li><a href="{{ url_for('rent.list')}}"> 대여기록 </a></li>
+                <li>
+                  <a href="{{ url_for('rent.ret',id=-1)}}"> 반납하기 </a>
+                </li>
+                <li>
+                  <a href="{{ url_for('book.new')}}"> 책 신청하기 </a>
+                </li>
+              </ul>
             </div>
             <!--    MAIN AREA -->
             <div class="mainArea">
               <!-- CONTAINER  -->
               <div class="mainContent">
-                <div class="container-fluid py-2 my-2">
-                  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                  messages %} {% for category, message in messages %}
-                  <div class="alert alert-{{category}} text-center" role="alert">
+                <div class="py-2 my-2" style="margin-bottom: 10px">
+                  {% with messages = get_flashed_messages(with_categories=true)
+                  %} {% if messages %} {% for category, message in messages %}
+                  <div
+                    class="alert alert-{{category}} text-center"
+                    role="alert"
+                  >
                     {{ message }}
                   </div>
                   {% endfor %} {% endif %} {% endwith %}
                 </div>
-                
-                <div class="comments-wrap" style="margin-bottom: 10px;"></div>
-                  <div style="margin-bottom: 10px;">내가 쓴 리뷰</div>
+
+                <div class="py-2 my-2" style="margin-bottom: 10px">
+                  <div style="margin-bottom: 10px">내가 쓴 리뷰</div>
                   {%for bookreview, book in reviews%}
-                  <div class="p-2 bg-light rounded-3" style="margin-bottom: 10px; width: 80%;">
-                      <div class="book-info">{{book.title}} | {{book.author}} | {{book.publisher}}</div>
-                      <div class="book-star">
-                        <span id="full-star">{{'⭐'*bookreview.star}}</span>
-                        <span id="empty-star">{{'⭐'*(5-bookreview.star)}}</span><br />
-                      </div>
-                      <div class="book-review">{{bookreview.comment}}</div>
-                      <hr width="50%">
+                  <div
+                    class="p-2 bg-light rounded-3"
+                    style="margin-bottom: 10px; width: 80%"
+                  >
+                    <div class="book-info">
+                      {{book.title}} | {{book.author}} | {{book.publisher}}
+                    </div>
+                    <div class="book-star">
+                      <span id="full-star">{{'⭐'*bookreview.star}}</span>
+                      <span id="empty-star">{{'⭐'*(5-bookreview.star)}}</span
+                      ><br />
+                    </div>
+                    <div class="book-review">{{bookreview.comment}}</div>
                   </div>
                   {%endfor%}
                 </div>
 
-                <div class="comments-wrap" style="margin-bottom: 10px;"></div>
-                  <div style="margin-bottom: 10px;">내가 신청한 책</div>
+                <div class="py-2 my-2" style="margin-bottom: 10px">
+                  <div style="margin-bottom: 10px">내가 신청한 책</div>
                   {%for newbook in newbooks%}
-                  <div class="p-2 bg-light rounded-3" style="margin-bottom: 10px; width: 80%;">
-                      <div class="book-info">책 제목: {{newbook.title}} <br/>
-                      저자: {{newbook.author}} <br/>
-                      출판사: {{newbook.publisher}}</div>
+                  <div
+                    class="p-2 bg-light rounded-3"
+                    style="margin-bottom: 10px; width: 80%"
+                  >
+                    <div class="book-info">
+                      책 제목: {{newbook.title}} <br />
+                      저자: {{newbook.author}} <br />
+                      출판사: {{newbook.publisher}}
+                    </div>
                   </div>
                   {%endfor%}
                 </div>
@@ -117,7 +127,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </main>
   </body>
