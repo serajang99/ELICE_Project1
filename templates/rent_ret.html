@@ -1,7 +1,10 @@
 {% extends 'rent.html' %} {% block rent_ret %} {% for book in books %}
-<div class="p-5 bg-light rounded-3 d-flex">
-  <img src="../../static/{{book.img}}" height="120px" class="mx-3 my-2" />
-  <table style="height: 120px" class="table table-light ml-3">
+<div class="p-2 bg-light rounded-3 d-flex">
+  <img src="../../static/{{book.img}}" width="100px" class="mx-3 my-2" />
+  <table
+    style="height: 100px; line-height: 50px"
+    class="table table-light ml-3"
+  >
     <thead>
       <tr>
         <th scope="col">책 제목</th>
