@@ -25,11 +25,16 @@
           </div>
           <div style="height: 50px">{{book.title}}</div> </a
         ><br />
-        {{book.author}}<br />
-        <span id="full-star">{{'⭐'*book.star}}</span>
-        <span id="empty-star">{{'⭐'*(5-book.star)}}</span><br />
-        {{book.stock}}권<br />
-        {% if g.email %}
+        <div class="mb-1">{{book.author}}</div>
+        <div class="mb-1">
+          <span id="full-star">{{'⭐'*book.star}}</span>
+          <span id="empty-star">{{'⭐'*(5-book.star)}}</span>
+        </div>
+        <div class="mb-1">
+          {% if book.stock == 0 %} 대출불가[재고없음] {% else %} 대출가능 {%
+          endif %}<br />
+        </div>
+        {% if g.email and g.admin == 0%}
         <a href="{{ url_for('rent.rent', id=book.id) }}">
           <button
             type="button"

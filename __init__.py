@@ -8,6 +8,7 @@ from . import book
 from . import search
 from . import rent
 from . import manage
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -44,4 +45,10 @@ def index():
 @app.route('/popup')
 def popup():
     session['cnt'] = 1
-    return render_template('popup.html')
+    day = datetime.today().day - 3
+    today = datetime.today().strftime("%Y-%m-")+str(day)+" 00:00:00"
+    print(today)
+    bookList = Book.query.filter(
+        Book.register_time >= today).all()
+
+    return render_template('popup.html', books=bookList)
