@@ -141,7 +141,6 @@
             >
               <option value="title">제목</option>
               <option value="author">저자</option>
-              <option value="publisher">출판사</option>
             </select>
             <input
               type="text"
@@ -214,7 +213,7 @@
             </div>
           </div>
         </footer>
-        <div id="cnt">{{session['cnt']}}</div>
+        <div id="cnt" style="display: none">{{session['cnt']}}</div>
       </div>
       <script>
         var searchBox = document.getElementById("searchBox");
@@ -257,18 +256,19 @@
 
         var selectBox = document.getElementById("selectBox");
         function onClickSelectBox() {
-          window.location.href = selectBox.value;
+          window.open("about:blank").location.href = selectBox.value;
         }
-        
+
         var cnt = document.getElementById("cnt").innerText;
         window.onload = function () {
-          console.log(cnt)
-            if ( cnt == '' ) {
+          console.log(cnt);
+          if (cnt == "") {
             window.open(
               "popup",
               "popup01",
               "width=300, height=400, scrollbars= 0, toolbar=0, menubar=no"
-            );}
+            );
+          }
         };
       </script>
     </main>

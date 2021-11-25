@@ -89,4 +89,14 @@ def new():
         messageType = 'success'
         flash(message=message, category=messageType)
 
-    return render_template('mypage.html')
+        user = User.query.filter(User.email == session['email']).first()
+        user_id = user.id
+        bookreviews = BookReview.query.filter(
+            BookReview.user_id == user_id).all()
+        reviews = []
+        for bookreview in bookreviews:
+            book = Book.query.filter(Book.id == bookreview.book_id).first()
+            reviews.append((bookreview, book))
+
+        newbooks = NewBook.query.filter(NewBook.user_id == user_id).all()
+        return render_template('mypage.html', reviews=reviews, newbooks=newbooks, user=user)

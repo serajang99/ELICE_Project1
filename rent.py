@@ -22,6 +22,10 @@ def list():
         books.append((book_info, rented_book))
 
     print(books)
+    if len(books) == 0:
+        message, messageType = '대여한 책이 존재하지 않습니다.', 'danger'
+        flash(message=message, category=messageType)
+
     return render_template('rent_list.html', books=books)
 
 
@@ -39,6 +43,9 @@ def ret(id):
         for book in rented_books:
             book_info = Book.query.filter(Book.id == book.book_id).first()
             books.append(book_info)
+        if len(books) == 0:
+            message, messageType = '대여한 책이 존재하지 않습니다.', 'danger'
+        flash(message=message, category=messageType)
         return render_template('rent_ret.html', books=books)
 
     else:
@@ -59,6 +66,11 @@ def ret(id):
         for book in rented_books:
             book_info = Book.query.filter(Book.id == book.book_id).first()
             books.append(book_info)
+
+        if len(books) == 0:
+            message, messageType = '대여한 책이 존재하지 않습니다.', 'danger'
+
+        flash(message=message, category=messageType)
         return render_template('rent_ret.html', books=books)
 
 
@@ -74,7 +86,6 @@ def rent(id):
 
     if stock == 0:
         message, messageType = '책이 존재하지 않습니다.', 'danger'
-        flash(message=message, category=messageType)
     else:
         book_rental = BookRental(
             datetime.now(), user_id, book_id, 0, datetime.now())
@@ -84,5 +95,7 @@ def rent(id):
         book = Book.query.filter(Book.id == id).first()
         book.stock -= 1
         db.session.commit()
+        message, messageType = '성공적으로 대여하였습니다.', 'success'
 
+    flash(message=message, category=messageType)
     return redirect('/')

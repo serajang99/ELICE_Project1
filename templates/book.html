@@ -108,7 +108,7 @@
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">출간일</td>
-                    <td width="500" class="h6">{{book.publication_date}}</td>
+                    <td width="500" class="h6">{{book.publication_date.strftime("%Y-%m-%d")}}</td>
                   </tr>
                   <tr class="align-middle">
                     <td width="200" class="h6 fw-bold">페이지 수</td>
@@ -147,7 +147,7 @@
                   <div class="d-flex col-10">{{review.comment}}</div>
                   <div class="d-flex col-2">
                     <span id="full-star">{{'⭐'*review.star}}</span>
-                    <span id="empty-star">{{'⭐'*(5-review.star)}}</span>
+                    <span id="empty-star" style="margin:0">{{'⭐'*(5-review.star)}}</span>
                   </div>
                 </div>
               </div>

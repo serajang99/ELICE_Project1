@@ -21,9 +21,6 @@ class Search(Resource):
             elif type == 'author':
                 search_books = Book.query.filter(
                     Book.author.like(f"%{q}%")).order_by(Book.id)
-            elif type == 'publisher':
-                search_books = Book.query.filter(
-                    Book.publisher.like(f"%{q}%")).order_by(Book.id)
 
             page = request.args.get('page', type=int, default=1)  # 페이지
             search_books = search_books.paginate(page, per_page=8)

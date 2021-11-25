@@ -27,8 +27,8 @@
           <span id="empty-star">{{'⭐'*(5-book.star)}}</span>
         </div>
         <div class="mb-1">
-          {% if book.stock == 0 %} 대출불가[재고없음] {% else %} 대출가능 {%
-          endif %}<br />
+          {% if book.stock == 0 %} 대출불가[{{book.stock}}권] {% else %}
+          대출가능[{{book.stock}}권] {% endif %}<br />
         </div>
         {% if g.email and g.admin == 0%}
         <a href="{{ url_for('rent.rent', id=book.id) }}">

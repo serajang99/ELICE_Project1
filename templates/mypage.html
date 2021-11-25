@@ -46,6 +46,11 @@
               >
             </a>
             <form class="d-flex">
+              <a href="{{ url_for('index') }}">
+                <button type="button" class="btn btn-outline-primary mx-1">
+                  홈
+                </button>
+              </a>
               <a href="{{ url_for('auth.signout') }}">
                 <button type="button" class="btn btn-outline-primary mx-1">
                   로그아웃
@@ -60,7 +65,7 @@
             <!--     SIDE AREA -->
             <div class="sideArea">
               <div class="avatar">
-                <div class="avatarName">Welcome,<br />{{g.email}}</div>
+                <div class="avatarName">Welcome,<br />{{user.username}}</div>
               </div>
               <ul class="sideMenu">
                 <li><a href="{{ url_for('rent.list')}}"> 대여기록 </a></li>
@@ -73,16 +78,17 @@
               </ul>
             </div>
             <!--    MAIN AREA -->
-            <div class="mainArea">
+            <div class="mainArea" style="overflow: auto">
               <!-- CONTAINER  -->
               <div class="mainContent">
-                <div class="container-fluid py-1" style="margin-top: 50px">
+                <div class="container-fluid py-1" style="margin-top: 20px">
                   {% with messages = get_flashed_messages(with_categories=true)
                   %} {% if messages %} {% for category, message in messages %}
                   {% if message != None %}
                   <div
                     class="alert alert-{{category}} text-center "
                     role="alert"
+                    style="width: 80%"
                   >
                     {{ message }}
                   </div>

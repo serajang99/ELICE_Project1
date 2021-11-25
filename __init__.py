@@ -47,7 +47,6 @@ def popup():
     session['cnt'] = 1
     day = datetime.today().day - 3
     today = datetime.today().strftime("%Y-%m-")+str(day)+" 00:00:00"
-    print(today)
     bookList = Book.query.filter(
         Book.register_time >= today).all()
 

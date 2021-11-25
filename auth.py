@@ -105,17 +105,19 @@ def signout():
 def mypage():
     user = User.query.filter(User.email == session['email']).first()
     user_id = user.id
-    bookreviews = BookReview.query.filter(BookReview.user_id == user_id).all()
+    bookreviews = BookReview.query.filter(BookReview.user_id == user_id).order_by(
+        BookReview.comment_date.desc()).all()
     reviews = []
     for bookreview in bookreviews:
         book = Book.query.filter(Book.id == bookreview.book_id).first()
         reviews.append((bookreview, book))
 
     newbooks = NewBook.query.filter(NewBook.user_id == user_id).all()
-    return render_template('mypage.html', reviews=reviews, newbooks=newbooks)
+    return render_template('mypage.html', reviews=reviews, newbooks=newbooks, user=user)
 
 
 @bp.route('/adminpage', methods=('GET', 'POST'))
 def adminpage():
+    user = User.query.filter(User.email == session['email']).first()
     newbooks = NewBook.query.all()
-    return render_template('adminpage.html', newbooks=newbooks)
+    return render_template('adminpage.html', newbooks=newbooks, user=user)
