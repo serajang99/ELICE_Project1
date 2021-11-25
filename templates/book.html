@@ -85,8 +85,8 @@
         </nav>
 
         <div class="p-5 mb-5 bg-light rounded-3">
-          <div class="bg-white rounded-5 ">
-            <div class="p-5 d-inline-flex text-center">
+          <div class="bg-white rounded-5 container-fluid">
+            <div class="p-5 d-flex text-center">
               <img
                 src="../../static/{{book.img}}"
                 height="350px"
@@ -141,12 +141,14 @@
             <div class="comments-wrap" style="margin-bottom: 10px">
               <div style="margin-bottom: 10px;">댓글 게시판</div>
               {% for review in reviews %}
-              <div class="p-2 bg-light border border-dark rounded-3" style="margin-bottom: 10px">
-                <div class="p-1" style="margin-left:auto">익명{{review.user_id}}</div>
-                <div class="d-flex p-2">
-                  <div style="width: 80%; margin-left:auto; margin-right:10px;">{{review.comment}}</div>
-                  <span id="full-star">{{'⭐'*review.star}}</span>
-                  <span id="empty-star">{{'⭐'*(5-review.star)}}</span><br />
+              <div class="p-2 bg-light border border-info rounded-3" style="margin-bottom: 10px">
+                <div class="p-1 mx-3">익명{{review.user_id}}</div>
+                <div class="container-fluid row justify-content-between" style="margin-bottom: 5px">
+                  <div class="d-flex col-10">{{review.comment}}</div>
+                  <div class="d-flex col-2">
+                    <span id="full-star">{{'⭐'*review.star}}</span>
+                    <span id="empty-star">{{'⭐'*(5-review.star)}}</span>
+                  </div>
                 </div>
               </div>
               {%endfor%}

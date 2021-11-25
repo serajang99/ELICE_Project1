@@ -721,7 +721,7 @@ label {
   position: fixed;
   top: 80px;
   bottom: 0;
-  left: 200px;
+  left: 220px;
   width: 100%;
   overflow: hidden;
 }
@@ -778,7 +778,7 @@ label {
     padding-left: 0;
   }
   .container .sideArea {
-    left: -200px;
+    left: 0px;
   }
   .container.is-click {
     padding-left: 200px;
