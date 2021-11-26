@@ -43,7 +43,7 @@ def update_data():
             isbn = ws.cell(r, 7).value
             description = ws.cell(r, 8).value
             link = ws.cell(r, 9).value
-            img_value = img_list[r-2]
+            img_value = img_list[r-1]
             img = f'img/book_img/{img_value}'
             data = {
                 'title': title,
