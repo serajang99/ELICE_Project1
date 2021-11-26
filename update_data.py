@@ -5,10 +5,7 @@ from db_connect import db
 import os
 import natsort
 
-scheduler = APScheduler()
 
-
-@scheduler.task('interval', id='update_data', hours=3)
 def update_data():
     wb = openpyxl.load_workbook(filename='data/book.xlsx')
     ws = wb.active

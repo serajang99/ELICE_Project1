@@ -4,7 +4,7 @@ CREATE TABLE `elice_library`.`book` (
     `title` VARCHAR(100) NOT NULL,
     `publisher` VARCHAR(100) NOT NULL,
     `author` VARCHAR(100) NOT NULL,
-    `publication_date` VARCHAR(20) NOT NULL,
+    `publication_date` DATETIME NOT NULL,
     `pages` INT NOT NULL,
     `isbn` VARCHAR(20) NOT NULL,
     `description` TEXT NOT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE `elice_library`.`user` (
     `username` VARCHAR(20) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `password` TEXT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `username_UNIQUE` (`username` ASC)
+    `admin` INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`)
 );
 
 -- 책 대여기록 테이블
@@ -31,8 +31,8 @@ CREATE TABLE `elice_library`.`bookRental` (
     `rental_date` DATETIME NOT NULL,
     `user_id` INT NOT NULL,
     `book_id` INT NOT NULL,
-    `is_returned` INT NOT NULL,
-    `return_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `is_returned` INT NOT NULL DEFAULT 0,
+    `return_date` DATETIME NOT NULL,
     PRIMARY KEY (`id`,`user_id`, `rental_date`),
     FOREIGN KEY (`user_id`) REFERENCES user (`id`),
     FOREIGN KEY (`book_id`) REFERENCES book (`id`)
@@ -55,7 +55,8 @@ CREATE TABLE `elice_library`.`bookReview` (
 CREATE TABLE `elice_library`.`newBook` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(100) NOT NULL,
-    `publisher` VARCHAR(100) NOT NULL,
     `author` VARCHAR(100) NOT NULL,
+    `publisher` VARCHAR(100) NOT NULL,
+    `user_id` INT NOT NULL,
     PRIMARY KEY (`id`)
 );
