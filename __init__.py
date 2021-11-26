@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, g, session
 from db_connect import db
 from models import Book
-from . import update_data_library
-from . import auth
-from . import book
-from . import search
-from . import rent
-from . import manage
+import update_data_library
+import auth
+import book
+import search
+import rent
+import manage
 from datetime import datetime
 
 
