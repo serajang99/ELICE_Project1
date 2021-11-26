@@ -12,6 +12,7 @@ CREATE TABLE `elice_library`.`book` (
     `img` VARCHAR(100) NOT NULL,
     `stock` INT NOT NULL DEFAULT 5,
     `star` INT NOT NULL DEFAULT 0,
+    `register_time` DATETIME NOT NULL,
     PRIMARY KEY (`id`)
 );
 
