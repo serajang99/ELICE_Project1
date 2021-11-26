@@ -109,7 +109,7 @@ class NewBook(db.Model):
     author = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, title, publisher, author, user_id):
+    def __init__(self, title, author, publisher, user_id):
         self.title = title
         self.publisher = publisher
         self.author = author
