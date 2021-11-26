@@ -97,7 +97,11 @@
 
                 <div class="py-2 my-2" style="margin-bottom: 10px">
                   <div style="margin-bottom: 10px">내가 쓴 리뷰</div>
-                  {%for bookreview, book in reviews%}
+                  {%if reviews|length == 0 %}
+                  <div class="p-2 bg-light rounded-3">
+                    내가 작성한 리뷰가 없습니다.
+                  </div>
+                  {%else %} {%for bookreview, book in reviews%}
                   <div
                     class="p-2 bg-light rounded-3"
                     style="margin-bottom: 10px; width: 80%"
@@ -112,12 +116,16 @@
                     </div>
                     <div class="book-review">{{bookreview.comment}}</div>
                   </div>
-                  {%endfor%}
+                  {%endfor%} {%endif%}
                 </div>
 
                 <div class="py-2 my-2" style="margin-bottom: 10px">
                   <div style="margin-bottom: 10px">내가 신청한 책</div>
-                  {%for newbook in newbooks%}
+                  {%if newbooks|length == 0 %}
+                  <div class="p-2 bg-light rounded-3">
+                    내가 신청한 책이 없습니다.
+                  </div>
+                  {%else%} {%for newbook in newbooks%}
                   <div
                     class="p-2 bg-light rounded-3"
                     style="margin-bottom: 10px; width: 80%"
@@ -128,7 +136,7 @@
                       출판사: {{newbook.publisher}}
                     </div>
                   </div>
-                  {%endfor%}
+                  {%endfor%} {%endif%}
                 </div>
               </div>
             </div>

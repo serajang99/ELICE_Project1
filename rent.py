@@ -32,6 +32,7 @@ def list():
 @bp.route('/ret/<id>', methods=('GET', 'POST'))
 def ret(id):
 
+    message, messageType = None, None
     user = User.query.filter(User.email == session['email']).first()
     user_id = user.id
 
@@ -45,7 +46,7 @@ def ret(id):
             books.append(book_info)
         if len(books) == 0:
             message, messageType = '대여한 책이 존재하지 않습니다.', 'danger'
-        flash(message=message, category=messageType)
+            flash(message=message, category=messageType)
         return render_template('rent_ret.html', books=books)
 
     else:
@@ -84,6 +85,8 @@ def rent(id):
     book = Book.query.filter(Book.id == book_id).first()
     stock = book.stock
 
+    message, messageType = None, None
+
     if stock == 0:
         message, messageType = '책이 존재하지 않습니다.', 'danger'
     else:
@@ -96,6 +99,11 @@ def rent(id):
         book.stock -= 1
         db.session.commit()
         message, messageType = '성공적으로 대여하였습니다.', 'success'
+
+        rent_already = BookRental.query.filter(
+            (BookRental.book_id == id) & (BookRental.user_id == user_id) & (BookRental.is_returned == 0)).all()
+        if len(rent_already) > 1:
+            message, messageType = f'이미 {len(rent_already)-1}권 대여한 책입니다.', 'warning'
 
     flash(message=message, category=messageType)
     return redirect('/')
