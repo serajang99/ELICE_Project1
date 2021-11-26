@@ -59,7 +59,7 @@ class User(db.Model):
 
 
 class BookReview(db.Model):
-    __tablename__ = 'BookReview'
+    __tablename__ = 'bookReview'
 
     id = db.Column(db.Integer, nullable=False,
                    primary_key=True, autoincrement=True)
@@ -79,7 +79,7 @@ class BookReview(db.Model):
 
 
 class BookRental(db.Model):
-    __tablename__ = 'BookRental'
+    __tablename__ = 'bookRental'
 
     id = db.Column(db.Integer, nullable=False,
                    primary_key=True, autoincrement=True)
@@ -100,7 +100,7 @@ class BookRental(db.Model):
 
 class NewBook(db.Model):
 
-    __tablename__ = 'NewBook'
+    __tablename__ = 'newBook'
 
     id = db.Column(db.Integer, nullable=False,
                    primary_key=True, autoincrement=True)
