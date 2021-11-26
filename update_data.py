@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.config.from_mapping(
     SECRET_KEY='dev',
 )
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost:3306/elice_library'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
