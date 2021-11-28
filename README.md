@@ -19,6 +19,11 @@
 - natsort="^8.0.0"
 
 ---
+## 관리자 id/pw
+id: admin@admin.com
+pw: admin@1234
+
+---
 
 ## 진행 사항
 
